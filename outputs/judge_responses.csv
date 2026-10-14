@@ -1,0 +1,719 @@
+judge_model,returned_model,answer_id,repeat_index,accuracy,brevity,coverage,tone_clarity,reasoning,raw_response,parse_ok,latency_seconds,cost_usd,prompt_tokens,completion_tokens,error,response_status,finish_reason
+anthropic/claude-sonnet-5.5,anthropic/claude-sonnet-5.5,A,1,1,3,4,3,"The sources contain no referral program, yet the answer invents an extra free month per referral and a process of telling support who referred you; only the 2-months-free annual billing claim (Document 2) is supported.","{""accuracy"": 1, ""brevity"": 3, ""coverage"": 4, ""tone_clarity"": 3, ""reasoning"": ""The sources contain no referral program, yet the answer invents an extra free month per referral and a process of telling support who referred you; only the 2-months-free annual billing claim (Document 2) is supported.""}",true,3.379,0.00451,1715,108,,ok,stop
+anthropic/claude-sonnet-5.5,anthropic/claude-sonnet-5.5,A,2,1,4,5,4,"The sources contain no referral program, yet the answer invents an extra free month per referral and a support-based process; only the annual 2-months-free claim (Doc 2) is supported. It does address both questions concisely and in a friendly tone.","{""accuracy"": 1, ""brevity"": 4, ""coverage"": 5, ""tone_clarity"": 4, ""reasoning"": ""The sources contain no referral program, yet the answer invents an extra free month per referral and a support-based process; only the annual 2-months-free claim (Doc 2) is supported. It does address both questions concisely and in a friendly tone.""}",true,2.221,0.00463,1715,120,,ok,stop
+anthropic/claude-sonnet-5.5,anthropic/claude-sonnet-5.5,A,3,1,3,4,4,"The sources never mention a referral program, so the invented extra free month per referral and the instruction to tell support are fabricated. Only the 2-months-free annual billing claim (Doc 2) is supported. It does address both parts of the question.","{""accuracy"": 1, ""brevity"": 3, ""coverage"": 4, ""tone_clarity"": 4, ""reasoning"": ""The sources never mention a referral program, so the invented extra free month per referral and the instruction to tell support are fabricated. Only the 2-months-free annual billing claim (Doc 2) is supported. It does address both parts of the question.""}",true,2.867,0.00463,1715,120,,ok,stop
+anthropic/claude-sonnet-5.5,anthropic/claude-sonnet-5.5,B,1,,,,,,"Checking the candidate answer against the sources: the 14-day money-back guarantee with a full refund is supported by Document 1. Two days after signup is within that window, so ""yes"" is correct.
+
+Unsupported claims: ""You can cancel from your account billing settings"" is not in the sources, since no cancellation path is given. ""Refund processed against your original payment method"" is also not in the sources. Both are minor procedural details that sound plausible but have no grounding. The word ""new"" in ""new-subscriber guarantee"" is fine. The answer also does not say the guarantee applies to the first paid subscription, but this is a minor point.
+
+Accuracy: the core claim is correct, but two unsupported details are included, so 3 or 4. The rubric says a meaningful unsupported claim puts it at 3. The cancellation location is a fabricated specific instruction, so I'll give 3.
+
+Brevity: the answer is short and mostly relevant, with a small amount of fluff (""Yes, absolutely""), so 4.
+
+Coverage: the question asks whether the customer can get their money back, and the answer addresses that, so 5.
+
+Tone: friendly, clear and appropriate, so 5.
+
+```json
+{""accuracy"":3,""brevity"":4,""coverage"":5,""tone_clarity"":5,""reasoning"":""The 14-day full-refund guarantee in the Refund Policy correctly covers a two-day-old subscription, but the billing-settings cancellation path and refund to the original payment method are not in the sources.""}
+```",false,6.182,0.008334,1717,490,Expecting value: line 1 column 1 (char 0),format_error,stop
+anthropic/claude-sonnet-5.5,anthropic/claude-sonnet-5.5,B,2,3,5,5,5,"The 14-day full refund for a two-day-old subscription matches Document 1, but the claims about cancelling from 'account billing settings' and the refund going to the 'original payment method' appear nowhere in the sources, so they are unsupported.","{""accuracy"": 3, ""brevity"": 5, ""coverage"": 5, ""tone_clarity"": 5, ""reasoning"": ""The 14-day full refund for a two-day-old subscription matches Document 1, but the claims about cancelling from 'account billing settings' and the refund going to the 'original payment method' appear nowhere in the sources, so they are unsupported.""}",true,2.124,0.004622,1696,123,,ok,stop
+anthropic/claude-sonnet-5.5,anthropic/claude-sonnet-5.5,B,3,3,5,5,5,"The 14-day full refund for new subscribers matches Document 1, but the claims about cancelling via 'account billing settings' and the refund going to the 'original payment method' are not in the sources, so accuracy is only a 3.","{""accuracy"": 3, ""brevity"": 5, ""coverage"": 5, ""tone_clarity"": 5, ""reasoning"": ""The 14-day full refund for new subscribers matches Document 1, but the claims about cancelling via 'account billing settings' and the refund going to the 'original payment method' are not in the sources, so accuracy is only a 3.""}",true,2.496,0.004572,1696,118,,ok,stop
+anthropic/claude-sonnet-5.5,anthropic/claude-sonnet-5.5,C,1,1,4,4,4,"Accuracy is 1 because Document 1 says downgrades take effect immediately with no refund of the price difference, and savings start next cycle; the answer wrongly promises a prorated refund and invents a link to the money-back guarantee. It is concise, clear, and addresses the question.","{""accuracy"": 1, ""brevity"": 4, ""coverage"": 4, ""tone_clarity"": 4, ""reasoning"": ""Accuracy is 1 because Document 1 says downgrades take effect immediately with no refund of the price difference, and savings start next cycle; the answer wrongly promises a prorated refund and invents a link to the money-back guarantee. It is concise, clear, and addresses the question.""}",true,2.714,0.004768,1699,137,,ok,stop
+anthropic/claude-sonnet-5.5,anthropic/claude-sonnet-5.5,C,2,1,4,4,4,"The answer contradicts Document 1, which says downgrades take effect immediately with no refund of the price difference for the current cycle; savings start next cycle. It also invents a prorated refund and a timeline, though it is concise and clear.","{""accuracy"": 1, ""brevity"": 4, ""coverage"": 4, ""tone_clarity"": 4, ""reasoning"": ""The answer contradicts Document 1, which says downgrades take effect immediately with no refund of the price difference for the current cycle; savings start next cycle. It also invents a prorated refund and a timeline, though it is concise and clear.""}",true,2.11,0.004598,1699,120,,ok,stop
+anthropic/claude-sonnet-5.5,anthropic/claude-sonnet-5.5,C,3,1,4,5,4,"The answer contradicts Document 1, which says downgrades take effect immediately with no refund of the price difference for the current cycle, and it invents a prorated refund and a timeline. It does address the question directly and clearly.","{""accuracy"": 1, ""brevity"": 4, ""coverage"": 5, ""tone_clarity"": 4, ""reasoning"": ""The answer contradicts Document 1, which says downgrades take effect immediately with no refund of the price difference for the current cycle, and it invents a prorated refund and a timeline. It does address the question directly and clearly.""}",true,1.914,0.004548,1699,115,,ok,stop
+anthropic/claude-sonnet-5.5,anthropic/claude-sonnet-5.5,D,1,4,4,4,2,"Per Document 3, data is recoverable for 30 days after cancellation and reactivation restores it, which the answer states correctly. It omits the export option and that about 23 days remain, and 'lol' with slangy phrasing is too casual for an accidental cancellation.","{""accuracy"": 4, ""brevity"": 4, ""coverage"": 4, ""tone_clarity"": 2, ""reasoning"": ""Per Document 3, data is recoverable for 30 days after cancellation and reactivation restores it, which the answer states correctly. It omits the export option and that about 23 days remain, and 'lol' with slangy phrasing is too casual for an accidental cancellation.""}",true,2.285,0.004712,1696,132,,ok,stop
+anthropic/claude-sonnet-5.5,anthropic/claude-sonnet-5.5,D,2,4,4,4,2,"Consistent with Document 3 (30-day recoverable window, reactivation restores data, permanent deletion after), but 'from when you cancelled' is fine; it omits the CSV/JSON export option, and the casual 'lol' and 'yeah so' tone is inappropriate for a stressed customer.","{""accuracy"": 4, ""brevity"": 4, ""coverage"": 4, ""tone_clarity"": 2, ""reasoning"": ""Consistent with Document 3 (30-day recoverable window, reactivation restores data, permanent deletion after), but 'from when you cancelled' is fine; it omits the CSV/JSON export option, and the casual 'lol' and 'yeah so' tone is inappropriate for a stressed customer.""}",true,2.961,0.004842,1696,145,,ok,stop
+anthropic/claude-sonnet-5.5,anthropic/claude-sonnet-5.5,D,3,4,4,4,2,"Consistent with Document 3 (30-day recoverable window, reactivation restores data, permanent deletion afterward), but it omits the CSV/JSON export option and says 'from when you cancelled' without noting that about a week has already passed; the casual 'lol' is inappropriate for a stressed customer.","{""accuracy"": 4, ""brevity"": 4, ""coverage"": 4, ""tone_clarity"": 2, ""reasoning"": ""Consistent with Document 3 (30-day recoverable window, reactivation restores data, permanent deletion afterward), but it omits the CSV/JSON export option and says 'from when you cancelled' without noting that about a week has already passed; the casual 'lol' is inappropriate for a stressed customer.""}",true,2.352,0.004842,1696,145,,ok,stop
+anthropic/claude-sonnet-5.5,anthropic/claude-sonnet-5.5,E,1,1,4,4,4,"Document 3 limits the 7-year custom retention to active, subscribed accounts, and post-cancellation data is kept only 30 days before permanent deletion. The answer wrongly claims it extends past cancellation, a major contradiction, though it is concise and addresses the question.","{""accuracy"": 1, ""brevity"": 4, ""coverage"": 4, ""tone_clarity"": 4, ""reasoning"": ""Document 3 limits the 7-year custom retention to active, subscribed accounts, and post-cancellation data is kept only 30 days before permanent deletion. The answer wrongly claims it extends past cancellation, a major contradiction, though it is concise and addresses the question.""}",true,2.239,0.004822,1736,135,,ok,stop
+anthropic/claude-sonnet-5.5,anthropic/claude-sonnet-5.5,E,2,1,4,5,4,"Document 3 limits Enterprise's custom 7-year retention to active, subscribed accounts, and says data is permanently deleted 30 days after cancellation for any tier; the answer wrongly claims post-cancellation extension, contradicting the source, though it is concise and addresses the question.","{""accuracy"":1,""brevity"":4,""coverage"":5,""tone_clarity"":4,""reasoning"":""Document 3 limits Enterprise's custom 7-year retention to active, subscribed accounts, and says data is permanently deleted 30 days after cancellation for any tier; the answer wrongly claims post-cancellation extension, contradicting the source, though it is concise and addresses the question.""}",true,2.176,0.004832,1736,136,,ok,stop
+anthropic/claude-sonnet-5.5,anthropic/claude-sonnet-5.5,E,3,1,4,4,4,"Document 3 limits Enterprise's custom 7-year retention to active accounts only, and post-cancellation data is kept 30 days then permanently deleted. The answer wrongly claims it extends post-cancellation retention, so it is a major contradiction, though it is concise and clear.","{""accuracy"": 1, ""brevity"": 4, ""coverage"": 4, ""tone_clarity"": 4, ""reasoning"": ""Document 3 limits Enterprise's custom 7-year retention to active accounts only, and post-cancellation data is kept 30 days then permanently deleted. The answer wrongly claims it extends post-cancellation retention, so it is a major contradiction, though it is concise and clear.""}",true,2.235,0.004852,1736,138,,ok,stop
+anthropic/claude-sonnet-5.5,anthropic/claude-sonnet-5.5,F,1,3,4,2,4,"The retry detail (3 times over 7 days) matches Document 2, but 'good chance it resolves itself once your card issue is fixed' is unsupported, and the answer omits suspension after failed retries and the 30-day data recovery window from Document 3.","{""accuracy"": 3, ""brevity"": 4, ""coverage"": 2, ""tone_clarity"": 4, ""reasoning"": ""The retry detail (3 times over 7 days) matches Document 2, but 'good chance it resolves itself once your card issue is fixed' is unsupported, and the answer omits suspension after failed retries and the 30-day data recovery window from Document 3.""}",true,2.044,0.004698,1709,128,,ok,stop
+anthropic/claude-sonnet-5.5,anthropic/claude-sonnet-5.5,F,2,3,4,2,4,"The 3 retries over 7 days is correct per Doc 2, but 'good chance it resolves itself once your card issue is fixed' is a mild inference. It omits account suspension after failed retries and the data-at-risk question (30-day recovery, Doc 3).","{""accuracy"": 3, ""brevity"": 4, ""coverage"": 2, ""tone_clarity"": 4, ""reasoning"": ""The 3 retries over 7 days is correct per Doc 2, but 'good chance it resolves itself once your card issue is fixed' is a mild inference. It omits account suspension after failed retries and the data-at-risk question (30-day recovery, Doc 3).""}",true,3.88,0.004748,1709,133,,ok,stop
+anthropic/claude-sonnet-5.5,anthropic/claude-sonnet-5.5,F,3,3,4,2,4,"The retry detail (3 retries over 7 days) matches Doc 2, but ""good chance it resolves itself once your card issue is fixed"" is an unsupported inference. The answer omits account suspension after failed retries and the data question (30-day recovery per Doc 3).","{""accuracy"": 3, ""brevity"": 4, ""coverage"": 2, ""tone_clarity"": 4, ""reasoning"": ""The retry detail (3 retries over 7 days) matches Doc 2, but \""good chance it resolves itself once your card issue is fixed\"" is an unsupported inference. The answer omits account suspension after failed retries and the data question (30-day recovery per Doc 3).""}",true,2.349,0.004778,1709,136,,ok,stop
+anthropic/claude-sonnet-5.5,anthropic/claude-sonnet-5.5,G,1,4,4,4,5,"The 10-for-12 pricing ($24 saved on Starter) and the 30-day partial refund with a 10% fee match Documents 1 and 2. However, it omits the 14-day full-refund guarantee for new subscribers and the no-refund rule for monthly plans, so 'cancel anytime' and 'less flexible' are slightly misleading.","{""accuracy"":4,""brevity"":4,""coverage"":4,""tone_clarity"":5,""reasoning"":""The 10-for-12 pricing ($24 saved on Starter) and the 30-day partial refund with a 10% fee match Documents 1 and 2. However, it omits the 14-day full-refund guarantee for new subscribers and the no-refund rule for monthly plans, so 'cancel anytime' and 'less flexible' are slightly misleading.""}",true,10.475,0.011756,1748,826,,ok,stop
+anthropic/claude-sonnet-5.5,anthropic/claude-sonnet-5.5,G,2,4,4,4,4,Annual savings ($24 on Starter: 10 months paid for 12) and the 30-day partial refund minus a 10% fee match the policy documents. It omits the 14-day money-back guarantee for new subscribers and that monthly plans get no refunds after that window.,"{""accuracy"":4,""brevity"":4,""coverage"":4,""tone_clarity"":4,""reasoning"":""Annual savings ($24 on Starter: 10 months paid for 12) and the 30-day partial refund minus a 10% fee match the policy documents. It omits the 14-day money-back guarantee for new subscribers and that monthly plans get no refunds after that window.""}",true,7.129,0.010126,1748,663,,ok,stop
+anthropic/claude-sonnet-5.5,anthropic/claude-sonnet-5.5,G,3,4,4,4,5,"Annual billing's 10-for-12 pricing ($120 vs $144, saving $24) and the 30-day partial refund minus a 10% fee match Documents 1 and 2. It omits the 14-day money-back guarantee and that monthly plans get no refund after it, so the flexibility contrast is slightly incomplete.","{""accuracy"":4,""brevity"":4,""coverage"":4,""tone_clarity"":5,""reasoning"":""Annual billing's 10-for-12 pricing ($120 vs $144, saving $24) and the 30-day partial refund minus a 10% fee match Documents 1 and 2. It omits the 14-day money-back guarantee and that monthly plans get no refund after it, so the flexibility contrast is slightly incomplete.""}",true,6.11,0.009006,1748,551,,ok,stop
+cohere/command-a-plus,cohere/command-a-plus,A,1,3,3,5,5,"Answer correctly notes annual plans include 2 months free (Doc 2) but adds an unsupported referral bonus; no referral program is listed, so accuracy is partial.","{""accuracy"":3,""brevity"":3,""coverage"":5,""tone_clarity"":5,""reasoning"":""Answer correctly notes annual plans include 2 months free (Doc 2) but adds an unsupported referral bonus; no referral program is listed, so accuracy is partial.""}",true,5.158,0.0020748,1061,1171,,ok,stop
+cohere/command-a-plus,cohere/command-a-plus,A,2,3,3,3,5,"Referral bonus claim isn’t in Docs 1‑3, so accuracy 3; answer is concise enough for brevity 3; it omits friend’s benefit, coverage 3; tone is clear, tone_clarity 5.","{
+  ""accuracy"": 3,
+  ""brevity"": 3,
+  ""coverage"": 3,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Referral bonus claim isn’t in Docs 1‑3, so accuracy 3; answer is concise enough for brevity 3; it omits friend’s benefit, coverage 3; tone is clear, tone_clarity 5.""
+}",true,3.409,0.0015588,1061,827,,ok,stop
+cohere/command-a-plus,cohere/command-a-plus,A,3,3,3,5,5,"Answer adds unsupported referral bonus; omits source info, making accuracy 3; includes extra annual discount detail, so brevity 3; covers both questions, coverage 5; tone is clear, tone_clarity 5.","{
+  ""accuracy"": 3,
+  ""brevity"": 3,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Answer adds unsupported referral bonus; omits source info, making accuracy 3; includes extra annual discount detail, so brevity 3; covers both questions, coverage 5; tone is clear, tone_clarity 5.""
+}",true,4.529,0.0020253,1061,1138,,ok,stop
+cohere/command-a-plus,cohere/command-a-plus,B,1,3,5,5,5,"The answer correctly cites the 14‑day money‑back guarantee (Document 1) but adds unsupported cancellation instructions, so accuracy is 3; brevity, coverage, and tone are all perfect.","{""accuracy"":3,""brevity"":5,""coverage"":5,""tone_clarity"":5,""reasoning"":""The answer correctly cites the 14‑day money‑back guarantee (Document 1) but adds unsupported cancellation instructions, so accuracy is 3; brevity, coverage, and tone are all perfect.""}",true,4.383,0.0019791,1042,1111,,ok,stop
+cohere/command-a-plus,cohere/command-a-plus,B,2,3,4,5,5,"The answer correctly cites the 14‑day money‑back guarantee (Document 1), but adds unsupported cancellation details, so accuracy is 3; brevity and tone are clear (4/5), coverage is complete (5/5).","{
+  ""accuracy"": 3,
+  ""brevity"": 4,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The answer correctly cites the 14‑day money‑back guarantee (Document 1), but adds unsupported cancellation details, so accuracy is 3; brevity and tone are clear (4/5), coverage is complete (5/5).""
+}",true,5.152,0.0023391,1042,1351,,ok,stop
+cohere/command-a-plus,cohere/command-a-plus,B,3,5,4,5,5,"Answer accurately references the 14‑day guarantee (Doc 1) and gives clear cancellation instructions, but is a bit verbose, making brevity slightly less than perfect.","{""accuracy"":5,""brevity"":4,""coverage"":5,""tone_clarity"":5,""reasoning"":""Answer accurately references the 14‑day guarantee (Doc 1) and gives clear cancellation instructions, but is a bit verbose, making brevity slightly less than perfect.""}",true,3.989,0.0017976,1042,990,,ok,stop
+cohere/command-a-plus,cohere/command-a-plus,C,1,1,3,3,5,"Downgrading does not refund the current cycle per Document 1, so the claim of a prorated refund is contradicted; brevity and coverage are limited, tone is clear.","{
+  ""accuracy"": 1,
+  ""brevity"": 3,
+  ""coverage"": 3,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Downgrading does not refund the current cycle per Document 1, so the claim of a prorated refund is contradicted; brevity and coverage are limited, tone is clear.""
+}",true,3.8,0.0016407,1039,886,,ok,stop
+cohere/command-a-plus,cohere/command-a-plus,C,2,1,1,3,5,"Downgrading does not refund the current billing cycle per Document 1, so the claim of a prorated refund is inaccurate.","{""accuracy"":1,""brevity"":1,""coverage"":3,""tone_clarity"":5,""reasoning"":""Downgrading does not refund the current billing cycle per Document 1, so the claim of a prorated refund is inaccurate.""}",true,3.798,0.0014937,1039,788,,ok,stop
+cohere/command-a-plus,cohere/command-a-plus,C,3,1,3,3,5,"Document 1 states downgrades do not refund the price difference for the current billing cycle, contradicting the answer.","{""accuracy"":1,""brevity"":3,""coverage"":3,""tone_clarity"":5,""reasoning"":""Document 1 states downgrades do not refund the price difference for the current billing cycle, contradicting the answer.""}",true,2.75,0.0011937,1039,588,,ok,stop
+cohere/command-a-plus,cohere/command-a-plus,D,1,5,4,5,3,"Answer accurately cites Document 3’s 30‑day recovery window and reactivation option, though its informal tone and extra filler slightly reduce brevity and formality.","{
+  ""accuracy"": 5,
+  ""brevity"": 4,
+  ""coverage"": 5,
+  ""tone_clarity"": 3,
+  ""reasoning"": ""Answer accurately cites Document 3’s 30‑day recovery window and reactivation option, though its informal tone and extra filler slightly reduce brevity and formality.""
+}",true,5.631,0.0015666,1042,836,,ok,stop
+cohere/command-a-plus,cohere/command-a-plus,D,2,5,4,5,4,"Answer correctly cites the 30‑day recovery window and reactivation per Document 3, but its informal tone and minor wordiness lower brevity and tone scores.","{""accuracy"":5,""brevity"":4,""coverage"":5,""tone_clarity"":4,""reasoning"":""Answer correctly cites the 30‑day recovery window and reactivation per Document 3, but its informal tone and minor wordiness lower brevity and tone scores.""}",true,4.513,0.0016911,1042,919,,ok,stop
+cohere/command-a-plus,cohere/command-a-plus,D,3,5,3,5,3,"Answer correctly states 30‑day recovery window and reactivation option per Document 3, but is informal and slightly verbose, missing export option.","{""accuracy"":5,""brevity"":3,""coverage"":5,""tone_clarity"":3,""reasoning"":""Answer correctly states 30‑day recovery window and reactivation option per Document 3, but is informal and slightly verbose, missing export option.""}",true,3.322,0.0015381,1042,817,,ok,stop
+cohere/command-a-plus,cohere/command-a-plus,E,1,1,5,3,5,"Enterprise customers can request up to 7 years retention, but only while the account remains active (Document 3), so post‑cancellation extension is not allowed.","{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 3,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Enterprise customers can request up to 7 years retention, but only while the account remains active (Document 3), so post‑cancellation extension is not allowed.""
+}",true,2.918,0.0012795,1060,641,,ok,stop
+cohere/command-a-plus,cohere/command-a-plus,E,2,1,5,3,5,"Custom retention for Enterprise applies only while the account remains active (Document 3), so the claim of post‑cancellation extension is inaccurate.","{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 3,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Custom retention for Enterprise applies only while the account remains active (Document 3), so the claim of post‑cancellation extension is inaccurate.""
+}",true,5.306,0.001995,1060,1118,,ok,stop
+cohere/command-a-plus,cohere/command-a-plus,E,3,1,5,3,5,"Custom retention up to 7 years applies only while the account remains active (Doc 3), so post‑cancellation extension is unsupported.","{""accuracy"":1,""brevity"":5,""coverage"":3,""tone_clarity"":5,""reasoning"":""Custom retention up to 7 years applies only while the account remains active (Doc 3), so post‑cancellation extension is unsupported.""}",true,6.801,0.0021645,1060,1231,,ok,stop
+cohere/command-a-plus,cohere/command-a-plus,F,1,5,5,3,5,"Correctly cites 3 retries over 7 days (Doc 2) but omits suspension and 30‑day data retention (Doc 3), leaving data risk unaddressed.","{
+  ""accuracy"": 5,
+  ""brevity"": 5,
+  ""coverage"": 3,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Correctly cites 3 retries over 7 days (Doc 2) but omits suspension and 30‑day data retention (Doc 3), leaving data risk unaddressed.""
+}",true,4.195,0.0018399,1048,1017,,ok,stop
+cohere/command-a-plus,cohere/command-a-plus,F,2,5,5,3,5,"Answer correctly states 3 retry attempts over 7 days per Document 2, but omits data retention details and suspension policy, leaving data risk unanswered.","{""accuracy"":5,""brevity"":5,""coverage"":3,""tone_clarity"":5,""reasoning"":""Answer correctly states 3 retry attempts over 7 days per Document 2, but omits data retention details and suspension policy, leaving data risk unanswered.""}",true,3.918,0.0018159,1048,1001,,ok,stop
+cohere/command-a-plus,cohere/command-a-plus,F,3,5,5,3,5,Retry policy matches Document 2; data risk info missing per Document 3.,"{""accuracy"":5,""brevity"":5,""coverage"":3,""tone_clarity"":5,""reasoning"":""Retry policy matches Document 2; data risk info missing per Document 3.""}",true,3.521,0.0015654,1048,834,,ok,stop
+cohere/command-a-plus,cohere/command-a-plus,G,1,5,3,3,5,"Yearly plan gives 2 months free (Doc 2) and 30‑day refund window (Doc 1), while monthly allows cancellation anytime; answer omitted monthly’s 14‑day full refund (Doc 1), affecting coverage.","{""accuracy"":5,""brevity"":3,""coverage"":3,""tone_clarity"":5,""reasoning"":""Yearly plan gives 2 months free (Doc 2) and 30‑day refund window (Doc 1), while monthly allows cancellation anytime; answer omitted monthly’s 14‑day full refund (Doc 1), affecting coverage.""}",true,5.632,0.002553,1065,1489,,ok,stop
+cohere/command-a-plus,cohere/command-a-plus,G,2,5,4,5,5,Answer accurately cites annual discount (Document 2) and refund terms (Document 1); monthly cancellation flexibility is correct. Minor extra greeting reduces brevity slightly.,"{
+  ""accuracy"": 5,
+  ""brevity"": 4,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Answer accurately cites annual discount (Document 2) and refund terms (Document 1); monthly cancellation flexibility is correct. Minor extra greeting reduces brevity slightly.""
+}",true,9.291,0.0031935,1065,1916,,ok,stop
+cohere/command-a-plus,cohere/command-a-plus,G,3,5,3,5,5,"Answer cites Document 2’s 10‑month pay/2‑month free benefit and Document 1’s 30‑day refund rule; greeting makes brevity 3, coverage 5, tone 5.","{
+  ""accuracy"": 5,
+  ""brevity"": 3,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Answer cites Document 2’s 10‑month pay/2‑month free benefit and Document 1’s 30‑day refund rule; greeting makes brevity 3, coverage 5, tone 5.""
+}",true,8.149,0.0031875,1065,1912,,ok,stop
+google/gemini-3.8-flash,google/gemini-3.8-flash,A,1,1,4,5,5,"The candidate fabricates a referral bonus policy offering an extra free month, which is completely unsupported by Document 2 or any other source document.","{
+  ""accuracy"": 1,
+  ""brevity"": 4,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The candidate fabricates a referral bonus policy offering an extra free month, which is completely unsupported by Document 2 or any other source document.""
+}",true,7.497,0.0036075,1120,738,,ok,stop
+google/gemini-3.8-flash,google/gemini-3.8-flash,A,2,1,5,5,5,"The response fabricates a referral bonus of an extra free month, which is completely unsupported by Document 2 and the source documents.","{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The response fabricates a referral bonus of an extra free month, which is completely unsupported by Document 2 and the source documents.""
+}",true,6.534,0.00312,1120,608,,ok,stop
+google/gemini-3.8-flash,google/gemini-3.8-flash,A,3,1,4,5,5,"The candidate fabricates a referral bonus of an extra free month, which is completely unsupported by Document 2 or any other source document.","{
+  ""accuracy"": 1,
+  ""brevity"": 4,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The candidate fabricates a referral bonus of an extra free month, which is completely unsupported by Document 2 or any other source document.""
+}",true,7.091,0.00335625,1120,671,,ok,stop
+google/gemini-3.8-flash,google/gemini-3.8-flash,B,1,3,5,5,5,"While the 14-day refund is supported by Document 1, instructions regarding cancelling via billing settings and refunding the original payment method are unsupported.","{
+  ""accuracy"": 3,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""While the 14-day refund is supported by Document 1, instructions regarding cancelling via billing settings and refunding the original payment method are unsupported.""
+}",true,7.563,0.00369225,1103,764,,ok,stop
+google/gemini-3.8-flash,google/gemini-3.8-flash,B,2,3,5,5,5,"While correctly confirming the 14-day full refund guarantee per Document 1, the response includes unsupported claims about canceling via billing settings and refunding the original payment method.","{
+  ""accuracy"": 3,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""While correctly confirming the 14-day full refund guarantee per Document 1, the response includes unsupported claims about canceling via billing settings and refunding the original payment method.""
+}",true,5.571,0.003276,1103,653,,ok,stop
+google/gemini-3.8-flash,google/gemini-3.8-flash,B,3,3,5,5,5,"While Document 1 confirms the 14-day full refund guarantee, instructions to cancel via billing settings and refund processing to the original payment method are unsupported.","{
+  ""accuracy"": 3,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""While Document 1 confirms the 14-day full refund guarantee, instructions to cancel via billing settings and refund processing to the original payment method are unsupported.""
+}",true,7.151,0.003321,1103,665,,ok,stop
+google/gemini-3.8-flash,google/gemini-3.8-flash,C,1,1,5,5,5,"The answer directly contradicts Document 1, which explicitly states that Nimbus Cloud does not refund the price difference for the current billing cycle when downgrading plans.","{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The answer directly contradicts Document 1, which explicitly states that Nimbus Cloud does not refund the price difference for the current billing cycle when downgrading plans.""
+}",true,4.844,0.0035805,1099,735,,ok,stop
+google/gemini-3.8-flash,google/gemini-3.8-flash,C,2,1,5,5,5,"The answer directly contradicts Document 1, which explicitly states that Nimbus Cloud does not refund the price difference for the current billing cycle when downgrading a plan.","{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The answer directly contradicts Document 1, which explicitly states that Nimbus Cloud does not refund the price difference for the current billing cycle when downgrading a plan.""
+}",true,3.806,0.00215925,1099,356,,ok,stop
+google/gemini-3.8-flash,google/gemini-3.8-flash,C,3,1,5,5,5,"The response directly contradicts Document 1, which explicitly states that Nimbus Cloud does not refund the price difference for the current billing cycle when downgrading.","{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The response directly contradicts Document 1, which explicitly states that Nimbus Cloud does not refund the price difference for the current billing cycle when downgrading.""
+}",true,4.784,0.002568,1099,465,,ok,stop
+google/gemini-3.8-flash,google/gemini-3.8-flash,D,1,5,3,5,3,"Per Document 3, data is recoverable within 30 days by reactivating the account; while the answer is factually accurate, its language is overly informal and repetitive.","{
+  ""accuracy"": 5,
+  ""brevity"": 3,
+  ""coverage"": 5,
+  ""tone_clarity"": 3,
+  ""reasoning"": ""Per Document 3, data is recoverable within 30 days by reactivating the account; while the answer is factually accurate, its language is overly informal and repetitive.""
+}",true,8.086,0.00385275,1107,806,,ok,stop
+google/gemini-3.8-flash,google/gemini-3.8-flash,D,2,5,4,5,2,"Per Document 3, reactivating within 30 days restores all data, making the information accurate and complete, but the casual phrasing and 'lol' are inappropriately informal for customer support.","{
+  ""accuracy"": 5,
+  ""brevity"": 4,
+  ""coverage"": 5,
+  ""tone_clarity"": 2,
+  ""reasoning"": ""Per Document 3, reactivating within 30 days restores all data, making the information accurate and complete, but the casual phrasing and 'lol' are inappropriately informal for customer support.""
+}",true,5.76,0.00251025,1107,448,,ok,stop
+google/gemini-3.8-flash,google/gemini-3.8-flash,D,3,5,4,5,3,"Per Document 3, the guidance to reactivate within 30 days to restore data is accurate and complete, but the response is overly informal and repetitive.","{
+  ""accuracy"": 5,
+  ""brevity"": 4,
+  ""coverage"": 5,
+  ""tone_clarity"": 3,
+  ""reasoning"": ""Per Document 3, the guidance to reactivate within 30 days to restore data is accurate and complete, but the response is overly informal and repetitive.""
+}",true,6.791,0.0035715,1107,731,,ok,stop
+google/gemini-3.8-flash,google/gemini-3.8-flash,E,1,1,5,5,5,"The answer directly contradicts Document 3, which specifies that the 7-year retention applies only to active accounts and post-cancellation data is permanently deleted after 30 days for all account tiers.","{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The answer directly contradicts Document 3, which specifies that the 7-year retention applies only to active accounts and post-cancellation data is permanently deleted after 30 days for all account tiers.""
+}",true,4.86,0.003066,1123,593,,ok,stop
+google/gemini-3.8-flash,google/gemini-3.8-flash,E,2,1,5,5,5,"The answer directly contradicts Document 3, which states custom retention applies only while active and subscribed, and data is permanently deleted after 30 days post-cancellation under all circumstances for any account tier.","{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The answer directly contradicts Document 3, which states custom retention applies only while active and subscribed, and data is permanently deleted after 30 days post-cancellation under all circumstances for any account tier.""
+}",true,4.706,0.00273975,1123,506,,ok,stop
+google/gemini-3.8-flash,google/gemini-3.8-flash,E,3,1,5,5,5,"The answer directly contradicts Document 3, which states custom retention applies only while an account is active and post-cancellation data is permanently deleted after 30 days for all tiers.","{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The answer directly contradicts Document 3, which states custom retention applies only while an account is active and post-cancellation data is permanently deleted after 30 days for all tiers.""
+}",true,7.172,0.002796,1123,521,,ok,stop
+google/gemini-3.8-flash,google/gemini-3.8-flash,F,1,5,5,3,5,The response accurately covers the 7-day retry policy from Document 2 but fails to address account suspension and data retention risks detailed in Documents 2 and 3.,"{
+  ""accuracy"": 5,
+  ""brevity"": 5,
+  ""coverage"": 3,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The response accurately covers the 7-day retry policy from Document 2 but fails to address account suspension and data retention risks detailed in Documents 2 and 3.""
+}",true,6.686,0.00266775,1107,490,,ok,stop
+google/gemini-3.8-flash,google/gemini-3.8-flash,F,2,5,5,3,5,"While the response accurately and clearly explains the retry schedule from Document 2, it completely fails to address whether customer data is at risk if payment remains unresolved, as outlined in Documents 2 and 3.","{
+  ""accuracy"": 5,
+  ""brevity"": 5,
+  ""coverage"": 3,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""While the response accurately and clearly explains the retry schedule from Document 2, it completely fails to address whether customer data is at risk if payment remains unresolved, as outlined in Documents 2 and 3.""
+}",true,4.213,0.003174,1107,625,,ok,stop
+google/gemini-3.8-flash,google/gemini-3.8-flash,F,3,5,5,3,5,"The response accurately and concisely explains the retry policy from Document 2, but fails to address whether data is at risk if non-payment leads to suspension and deletion under Document 3.","{
+  ""accuracy"": 5,
+  ""brevity"": 5,
+  ""coverage"": 3,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The response accurately and concisely explains the retry policy from Document 2, but fails to address whether data is at risk if non-payment leads to suspension and deletion under Document 3.""
+}",true,4.335,0.0030465,1107,591,,ok,stop
+google/gemini-3.8-flash,google/gemini-3.8-flash,G,1,5,5,5,5,"The response accurately and concisely outlines the two free months ($24 savings) from Document 2 and the relevant cancellation differences from Document 1 with clear, professional tone.","{
+  ""accuracy"": 5,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The response accurately and concisely outlines the two free months ($24 savings) from Document 2 and the relevant cancellation differences from Document 1 with clear, professional tone.""
+}",true,6.608,0.00379125,1125,786,,ok,stop
+google/gemini-3.8-flash,google/gemini-3.8-flash,G,2,5,5,5,5,"The response accurately details the two-month discount and refund conditions supported by Documents 1 and 2 in a clear, concise, and helpful manner.","{
+  ""accuracy"": 5,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The response accurately details the two-month discount and refund conditions supported by Documents 1 and 2 in a clear, concise, and helpful manner.""
+}",true,5.338,0.0041475,1125,881,,ok,stop
+google/gemini-3.8-flash,google/gemini-3.8-flash,G,3,5,5,5,5,"The response accurately details the 2 months free pricing ($24 savings) from Document 2 and the cancellation differences from Document 1 in a clear, concise manner.","{
+  ""accuracy"": 5,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The response accurately details the 2 months free pricing ($24 savings) from Document 2 and the cancellation differences from Document 1 in a clear, concise manner.""
+}",true,6.388,0.0035775,1125,729,,ok,stop
+meta-llama/llama-4-maverick,meta-llama/llama-4-maverick,A,1,1,3,3,5,"The candidate answer claims a referral bonus not supported by any source document, contradicting Document 1, 2, and 3 which don't mention referrals.","{""accuracy"": 1, ""brevity"": 3, ""coverage"": 3, ""tone_clarity"": 5, ""reasoning"": ""The candidate answer claims a referral bonus not supported by any source document, contradicting Document 1, 2, and 3 which don't mention referrals.""}",true,1.295,0.0004412,1072,66,,ok,stop
+meta-llama/llama-4-maverick,meta-llama/llama-4-maverick,A,2,1,3,3,5,"The candidate answer claims a referral bonus not supported by any source document, contradicting Document 1, 2, and 3.","{""accuracy"": 1, ""brevity"": 3, ""coverage"": 3, ""tone_clarity"": 5, ""reasoning"": ""The candidate answer claims a referral bonus not supported by any source document, contradicting Document 1, 2, and 3.""}",true,1.311,0.00024712,1072,62,,ok,stop
+meta-llama/llama-4-maverick,meta-llama/llama-4-maverick,A,3,1,3,3,5,"The candidate answer claims a referral bonus not supported by any source document, contradicting Document 1, 2, and 3.","{""accuracy"": 1, ""brevity"": 3, ""coverage"": 3, ""tone_clarity"": 5, ""reasoning"": ""The candidate answer claims a referral bonus not supported by any source document, contradicting Document 1, 2, and 3.""}",true,1.113,0.00024712,1072,62,,ok,stop
+meta-llama/llama-4-maverick,meta-llama/llama-4-maverick,B,1,5,4,5,5,The candidate answer accurately reflects the 14-day money-back guarantee policy stated in Document 1: Refund & Cancellation Policy.,"{""accuracy"": 5, ""brevity"": 4, ""coverage"": 5, ""tone_clarity"": 5, ""reasoning"": ""The candidate answer accurately reflects the 14-day money-back guarantee policy stated in Document 1: Refund & Cancellation Policy.""}",true,15.159,0.00031335,1053,60,,ok,stop
+meta-llama/llama-4-maverick,meta-llama/llama-4-maverick,B,2,5,5,5,5,The answer accurately reflects the 14-day money-back guarantee policy (Document 1: Refund & Cancellation Policy).,"{""accuracy"": 5, ""brevity"": 5, ""coverage"": 5, ""tone_clarity"": 5, ""reasoning"": ""The answer accurately reflects the 14-day money-back guarantee policy (Document 1: Refund & Cancellation Policy).""}",true,1.056,0.00023935,1053,58,,ok,stop
+meta-llama/llama-4-maverick,meta-llama/llama-4-maverick,B,3,5,5,5,5,The candidate answer accurately reflects the 14-day money-back guarantee policy stated in Document 1: Refund & Cancellation Policy.,"{""accuracy"": 5, ""brevity"": 5, ""coverage"": 5, ""tone_clarity"": 5, ""reasoning"": ""The candidate answer accurately reflects the 14-day money-back guarantee policy stated in Document 1: Refund & Cancellation Policy.""}",true,1.073,0.00024135,1053,60,,ok,stop
+meta-llama/llama-4-maverick,meta-llama/llama-4-maverick,C,1,1,3,5,5,"The candidate answer claims a prorated refund for downgrading, which contradicts Document 1 stating 'Nimbus Cloud does not refund the price difference for the current billing cycle'.","{""accuracy"": 1, ""brevity"": 3, ""coverage"": 5, ""tone_clarity"": 5, ""reasoning"": ""The candidate answer claims a prorated refund for downgrading, which contradicts Document 1 stating 'Nimbus Cloud does not refund the price difference for the current billing cycle'.""}",true,1.454,0.000324,1052,71,,ok,stop
+meta-llama/llama-4-maverick,meta-llama/llama-4-maverick,C,2,1,3,5,5,"According to Document 1, downgrading doesn't result in a refund for the price difference for the current billing cycle (Refund & Cancellation Policy).","{""accuracy"": 1, ""brevity"": 3, ""coverage"": 5, ""tone_clarity"": 5, ""reasoning"": ""According to Document 1, downgrading doesn't result in a refund for the price difference for the current billing cycle (Refund & Cancellation Policy).""}",true,1.314,0.000245,1052,64,,ok,stop
+meta-llama/llama-4-maverick,meta-llama/llama-4-maverick,C,3,1,3,5,5,"According to Document 1, downgrading doesn't result in a refund for the price difference for the current billing cycle (Refund & Cancellation Policy).","{""accuracy"": 1, ""brevity"": 3, ""coverage"": 5, ""tone_clarity"": 5, ""reasoning"": ""According to Document 1, downgrading doesn't result in a refund for the price difference for the current billing cycle (Refund & Cancellation Policy).""}",true,1.818,0.000245,1052,64,,ok,stop
+meta-llama/llama-4-maverick,meta-llama/llama-4-maverick,D,1,5,3,5,3,"The candidate answer is generally accurate and covers the main point, citing the 30-day recoverable state (Document 3), but tone is informal and somewhat ambiguous.","{""accuracy"": 5, ""brevity"": 3, ""coverage"": 5, ""tone_clarity"": 3, ""reasoning"": ""The candidate answer is generally accurate and covers the main point, citing the 30-day recoverable state (Document 3), but tone is informal and somewhat ambiguous.""}",true,1.218,0.0003217,1054,68,,ok,stop
+meta-llama/llama-4-maverick,meta-llama/llama-4-maverick,D,2,5,3,5,3,"Candidate answer is supported by Document 3, which states data is kept recoverable for 30 days after cancellation.","{""accuracy"": 5, ""brevity"": 3, ""coverage"": 5, ""tone_clarity"": 3, ""reasoning"": ""Candidate answer is supported by Document 3, which states data is kept recoverable for 30 days after cancellation.""}",true,1.182,0.0002397,1054,58,,ok,stop
+meta-llama/llama-4-maverick,meta-llama/llama-4-maverick,D,3,5,3,5,3,"The candidate answer is supported by Document 3, which states data is kept recoverable for 30 days after cancellation.","{""accuracy"": 5, ""brevity"": 3, ""coverage"": 5, ""tone_clarity"": 3, ""reasoning"": ""The candidate answer is supported by Document 3, which states data is kept recoverable for 30 days after cancellation.""}",true,1.394,0.0002407,1054,59,,ok,stop
+meta-llama/llama-4-maverick,meta-llama/llama-4-maverick,E,1,3,4,5,5,"The candidate answer incorrectly implies custom retention applies post-cancellation, contradicting Document 3, which states it only applies to active accounts.","{""accuracy"": 3, ""brevity"": 4, ""coverage"": 5, ""tone_clarity"": 5, ""reasoning"": ""The candidate answer incorrectly implies custom retention applies post-cancellation, contradicting Document 3, which states it only applies to active accounts.""}",true,1.15,0.00032165,1071,62,,ok,stop
+meta-llama/llama-4-maverick,meta-llama/llama-4-maverick,E,2,3,4,5,5,"The candidate answer misinterprets the custom retention period as applying post-cancellation, whereas Document 3 states it applies only while the account remains active (Document 3).","{""accuracy"": 3, ""brevity"": 4, ""coverage"": 5, ""tone_clarity"": 5, ""reasoning"": ""The candidate answer misinterprets the custom retention period as applying post-cancellation, whereas Document 3 states it applies only while the account remains active (Document 3).""}",true,1.137,0.00025477,1071,70,,ok,stop
+meta-llama/llama-4-maverick,meta-llama/llama-4-maverick,E,3,3,4,5,5,"The candidate answer incorrectly implies custom retention applies post-cancellation, contradicting Document 3, which states it only applies to active accounts.","{""accuracy"": 3, ""brevity"": 4, ""coverage"": 5, ""tone_clarity"": 5, ""reasoning"": ""The candidate answer incorrectly implies custom retention applies post-cancellation, contradicting Document 3, which states it only applies to active accounts.""}",true,1.139,0.00024677,1071,62,,ok,stop
+meta-llama/llama-4-maverick,meta-llama/llama-4-maverick,F,1,5,4,3,5,"The candidate answer accurately states that Nimbus Cloud will retry the charge up to 3 times over 7 days (Document 2), but doesn't address data risk.","{""accuracy"": 5, ""brevity"": 4, ""coverage"": 3, ""tone_clarity"": 5, ""reasoning"": ""The candidate answer accurately states that Nimbus Cloud will retry the charge up to 3 times over 7 days (Document 2), but doesn't address data risk.""}",true,1.128,0.00032245,1059,67,,ok,stop
+meta-llama/llama-4-maverick,meta-llama/llama-4-maverick,F,2,5,4,3,5,"The candidate answer accurately states that Nimbus Cloud will retry the charge up to 3 times over 7 days (Document 2), but doesn't address data risk.","{""accuracy"": 5, ""brevity"": 4, ""coverage"": 3, ""tone_clarity"": 5, ""reasoning"": ""The candidate answer accurately states that Nimbus Cloud will retry the charge up to 3 times over 7 days (Document 2), but doesn't address data risk.""}",true,1.104,0.00024757,1059,67,,ok,stop
+meta-llama/llama-4-maverick,meta-llama/llama-4-maverick,F,3,5,4,3,5,"The answer accurately states that Nimbus Cloud will retry the charge up to 3 times over 7 days (Document 2), but doesn't address data risk or cancellation.","{""accuracy"": 5, ""brevity"": 4, ""coverage"": 3, ""tone_clarity"": 5, ""reasoning"": ""The answer accurately states that Nimbus Cloud will retry the charge up to 3 times over 7 days (Document 2), but doesn't address data risk or cancellation.""}",true,2.147,0.00024857,1059,68,,ok,stop
+meta-llama/llama-4-maverick,meta-llama/llama-4-maverick,G,1,5,4,5,5,"Accurately compares annual and monthly billing, citing the correct discount and refund policies (Document 1 and 2).","{""accuracy"": 5, ""brevity"": 4, ""coverage"": 5, ""tone_clarity"": 5, ""reasoning"": ""Accurately compares annual and monthly billing, citing the correct discount and refund policies (Document 1 and 2).""}",true,1.072,0.0003204,1076,59,,ok,stop
+meta-llama/llama-4-maverick,meta-llama/llama-4-maverick,G,2,5,4,5,5,"The candidate answer accurately compares annual and monthly billing, citing the correct discount and refund policy from Document 1 and Document 2.","{""accuracy"": 5, ""brevity"": 4, ""coverage"": 5, ""tone_clarity"": 5, ""reasoning"": ""The candidate answer accurately compares annual and monthly billing, citing the correct discount and refund policy from Document 1 and Document 2.""}",true,1.261,0.00024464,1076,61,,ok,stop
+meta-llama/llama-4-maverick,meta-llama/llama-4-maverick,G,3,5,4,5,5,"The candidate answer accurately compares annual and monthly billing for the Starter plan, citing the correct discount and refund policies (Document 1 and 2).","{""accuracy"": 5, ""brevity"": 4, ""coverage"": 5, ""tone_clarity"": 5, ""reasoning"": ""The candidate answer accurately compares annual and monthly billing for the Starter plan, citing the correct discount and refund policies (Document 1 and 2).""}",true,1.204,0.00024764,1076,64,,ok,stop
+mistralai/mistral-large-4-0,mistralai/mistral-large-4-0,A,1,1,3,3,3,The candidate fabricates a referral bonus not supported by any source document; only the annual 2-months-free discount is verified (Document 2).,"{
+  ""accuracy"": 1,
+  ""brevity"": 3,
+  ""coverage"": 3,
+  ""tone_clarity"": 3,
+  ""reasoning"": ""The candidate fabricates a referral bonus not supported by any source document; only the annual 2-months-free discount is verified (Document 2).""
+}",true,70.833,0.00930426,1112,4090,,ok,stop
+mistralai/mistral-large-4-0,mistralai/mistral-large-4-0,A,2,1,5,3,5,"Document 2 only specifies a 2-month-free annual billing discount and contains no referral program; the candidate fabricates an extra free month for referrals, a major claim unsupported by any source.","{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 3,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Document 2 only specifies a 2-month-free annual billing discount and contains no referral program; the candidate fabricates an extra free month for referrals, a major claim unsupported by any source.""
+}",true,38.796,0.00586203,1112,2443,,ok,stop
+mistralai/mistral-large-4-0,mistralai/mistral-large-4-0,A,3,1,4,4,3,"The answer fabricates a referral bonus (extra free month) not found in the source documents, which mention no referral program in the Subscription Tiers or Refund policies.","{
+  ""accuracy"": 1,
+  ""brevity"": 4,
+  ""coverage"": 4,
+  ""tone_clarity"": 3,
+  ""reasoning"": ""The answer fabricates a referral bonus (extra free month) not found in the source documents, which mention no referral program in the Subscription Tiers or Refund policies.""
+}",true,113.194,0.01038354,1112,4750,,ok,stop
+mistralai/mistral-large-4-0,mistralai/mistral-large-4-0,B,1,3,5,5,5,Correctly cites the 14-day money-back guarantee (Document 1) but includes unsupported claims about canceling via billing settings and refund method.,"{
+  ""accuracy"": 3,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Correctly cites the 14-day money-back guarantee (Document 1) but includes unsupported claims about canceling via billing settings and refund method.""
+}",true,48.592,0.0065827,1093,2794,,ok,stop
+mistralai/mistral-large-4-0,mistralai/mistral-large-4-0,B,2,3,5,5,5,"Correctly applies Document 1's 14-day new-subscriber refund guarantee, but includes unsupported claims about cancellation settings and refund processing method.","{
+  ""accuracy"": 3,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Correctly applies Document 1's 14-day new-subscriber refund guarantee, but includes unsupported claims about cancellation settings and refund processing method.""
+}",true,58.138,0.0074279,1093,3342,,ok,stop
+mistralai/mistral-large-4-0,mistralai/mistral-large-4-0,B,3,4,5,5,5,"Correctly applies the 14-day new-subscriber money-back guarantee from Document 1, but adds unsupported procedural details about canceling via billing settings and refund processing methods.","{
+  ""accuracy"": 4,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Correctly applies the 14-day new-subscriber money-back guarantee from Document 1, but adds unsupported procedural details about canceling via billing settings and refund processing methods.""
+}",true,108.464,0.00951706,1093,4198,,ok,stop
+mistralai/mistral-large-4-0,mistralai/mistral-large-4-0,C,1,1,5,5,5,"Document 1 explicitly states that downgrading does not refund the price difference for the current billing cycle, contradicting the candidate's incorrect claim of a prorated refund.","{""accuracy"": 1, ""brevity"": 5, ""coverage"": 5, ""tone_clarity"": 5, ""reasoning"": ""Document 1 explicitly states that downgrading does not refund the price difference for the current billing cycle, contradicting the candidate's incorrect claim of a prorated refund.""}",true,23.584,0.00493719,1092,2007,,ok,stop
+mistralai/mistral-large-4-0,mistralai/mistral-large-4-0,C,2,1,4,5,5,"The answer contradicts Document 1, which explicitly states that downgrading does not refund the price difference for the current billing cycle.","{
+  ""accuracy"": 1,
+  ""brevity"": 4,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The answer contradicts Document 1, which explicitly states that downgrading does not refund the price difference for the current billing cycle.""
+}",true,35.158,0.007515,1092,3384,,ok,stop
+mistralai/mistral-large-4-0,mistralai/mistral-large-4-0,C,3,1,5,5,5,"The answer contradicts Document 1, which states Nimbus Cloud does not refund the price difference for the current billing cycle when downgrading, though the response is concise and clear.","{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The answer contradicts Document 1, which states Nimbus Cloud does not refund the price difference for the current billing cycle when downgrading, though the response is concise and clear.""
+}",true,100.166,0.00607826,1092,2846,,ok,stop
+mistralai/mistral-large-4-0,mistralai/mistral-large-4-0,D,1,5,5,5,3,"Accurate per Document 3's 30-day data retention and reactivation policy, but overly informal tone ('lol') reduces tone_clarity score.","{""accuracy"": 5, ""brevity"": 5, ""coverage"": 5, ""tone_clarity"": 3, ""reasoning"": ""Accurate per Document 3's 30-day data retention and reactivation policy, but overly informal tone ('lol') reduces tone_clarity score.""}",true,76.178,0.01014485,1096,4641,,ok,stop
+mistralai/mistral-large-4-0,mistralai/mistral-large-4-0,D,2,5,4,5,3,"Factual claims align with Document 3 (30-day recoverable window, permanent deletion after, reactivation restores data), but the casual 'lol' and filler phrases make the tone overly informal.","{
+  ""accuracy"": 5,
+  ""brevity"": 4,
+  ""coverage"": 5,
+  ""tone_clarity"": 3,
+  ""reasoning"": ""Factual claims align with Document 3 (30-day recoverable window, permanent deletion after, reactivation restores data), but the casual 'lol' and filler phrases make the tone overly informal.""
+}",true,111.825,0.01084918,1096,4978,,ok,stop
+mistralai/mistral-large-4-0,mistralai/mistral-large-4-0,D,3,5,4,5,3,"All claims supported by Document 3 (30-day recovery window, permanent deletion after); tone is overly informal with 'lol' and conversational filler, but directly answers the question.","{
+  ""accuracy"": 5,
+  ""brevity"": 4,
+  ""coverage"": 5,
+  ""tone_clarity"": 3,
+  ""reasoning"": ""All claims supported by Document 3 (30-day recovery window, permanent deletion after); tone is overly informal with 'lol' and conversational filler, but directly answers the question.""
+}",true,83.201,0.00797041,1096,3457,,ok,stop
+mistralai/mistral-large-4-0,mistralai/mistral-large-4-0,E,1,1,5,5,5,"Document 3 states the 7-year custom retention applies only to active accounts, while the answer falsely claims it extends the 30-day post-cancellation deletion window for Enterprise data.","{""accuracy"": 1, ""brevity"": 5, ""coverage"": 5, ""tone_clarity"": 5, ""reasoning"": ""Document 3 states the 7-year custom retention applies only to active accounts, while the answer falsely claims it extends the 30-day post-cancellation deletion window for Enterprise data.""}",true,86.651,0.00579792,1113,2412,,ok,stop
+mistralai/mistral-large-4-0,mistralai/mistral-large-4-0,E,2,1,5,5,5,"The answer falsely claims Enterprise's 7-year retention applies post-cancellation, but Document 3 states it applies 'only while the account remains active and subscribed.'","{""accuracy"": 1, ""brevity"": 5, ""coverage"": 5, ""tone_clarity"": 5, ""reasoning"": ""The answer falsely claims Enterprise's 7-year retention applies post-cancellation, but Document 3 states it applies 'only while the account remains active and subscribed.'""}",true,36.307,0.00652733,1113,2761,,ok,stop
+mistralai/mistral-large-4-0,mistralai/mistral-large-4-0,E,3,1,5,5,5,"Accuracy is 1 because Document 3 states the 7-year custom retention applies only to active accounts, not post-cancellation data, which is deleted after 30 days for all tiers; other dimensions score high due to the response's conciseness and clarity.","{""accuracy"": 1, ""brevity"": 5, ""coverage"": 5, ""tone_clarity"": 5, ""reasoning"": ""Accuracy is 1 because Document 3 states the 7-year custom retention applies only to active accounts, not post-cancellation data, which is deleted after 30 days for all tiers; other dimensions score high due to the response's conciseness and clarity.""}",true,71.515,0.00926816,1113,4216,,ok,stop
+mistralai/mistral-large-4-0,mistralai/mistral-large-4-0,F,1,3,4,3,4,"Correctly cites the 3 retries over 7 days (Doc 2) but omits account suspension and the 30-day data deletion policy (Doc 3), failing to address the customer's data risk concern.","{""accuracy"": 3, ""brevity"": 4, ""coverage"": 3, ""tone_clarity"": 4, ""reasoning"": ""Correctly cites the 3 retries over 7 days (Doc 2) but omits account suspension and the 30-day data deletion policy (Doc 3), failing to address the customer's data risk concern.""}",true,46.82,0.00757478,1100,3410,,ok,stop
+mistralai/mistral-large-4-0,mistralai/mistral-large-4-0,F,2,3,4,3,4,"The answer correctly cites the 3-retry/7-day policy but omits suspension consequences and 30-day data deletion risk, and unsupported 'good chance' inference lowers accuracy.","{
+  ""accuracy"": 3,
+  ""brevity"": 4,
+  ""coverage"": 3,
+  ""tone_clarity"": 4,
+  ""reasoning"": ""The answer correctly cites the 3-retry/7-day policy but omits suspension consequences and 30-day data deletion risk, and unsupported 'good chance' inference lowers accuracy.""
+}",true,58.147,0.00912681,1100,4009,,ok,stop
+mistralai/mistral-large-4-0,mistralai/mistral-large-4-0,F,3,3,5,3,3,"Correctly cites 3 retries over 7 days (Doc 2) but omits suspension and 30-day data deletion risk (Doc 3), includes unsupported optimism about resolution.","{
+  ""accuracy"": 3,
+  ""brevity"": 5,
+  ""coverage"": 3,
+  ""tone_clarity"": 3,
+  ""reasoning"": ""Correctly cites 3 retries over 7 days (Doc 2) but omits suspension and 30-day data deletion risk (Doc 3), includes unsupported optimism about resolution.""
+}",true,40.972,0.00748282,1100,3366,,ok,stop
+mistralai/mistral-large-4-0,mistralai/mistral-large-4-0,G,1,5,5,5,5,"Accurately states annual billing saves $24 (2 months free on $12 Starter plan) and describes the 30-day partial refund policy with 10% fee, while noting monthly cancellation flexibility, per Documents 1 and 2.","{
+  ""accuracy"": 5,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Accurately states annual billing saves $24 (2 months free on $12 Starter plan) and describes the 30-day partial refund policy with 10% fee, while noting monthly cancellation flexibility, per Documents 1 and 2.""
+}",true,74.65,0.00841121,1116,3805,,ok,stop
+mistralai/mistral-large-4-0,mistralai/mistral-large-4-0,G,2,3,5,3,4,"Answer correctly cites the 10-month/2-month-free discount ($24 savings) and 30-day partial refund policy, but omits the 14-day full money-back guarantee for new subscribers and mischaracterizes annual plans as 'less flexible' than monthly regarding refunds.","{
+  ""accuracy"": 3,
+  ""brevity"": 5,
+  ""coverage"": 3,
+  ""tone_clarity"": 4,
+  ""reasoning"": ""Answer correctly cites the 10-month/2-month-free discount ($24 savings) and 30-day partial refund policy, but omits the 14-day full money-back guarantee for new subscribers and mischaracterizes annual plans as 'less flexible' than monthly regarding refunds.""
+}",true,165.642,0.0139426,1116,6308,,ok,stop
+mistralai/mistral-large-4-0,mistralai/mistral-large-4-0,G,3,5,5,5,5,"Accurately states annual billing saves $24 (2 months free on $12 Starter plan), correctly describes 30-day partial refund with 10% fee for annual plans, and notes monthly cancellation flexibility; all grounded in Documents 1 and 2.","{
+  ""accuracy"": 5,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Accurately states annual billing saves $24 (2 months free on $12 Starter plan), correctly describes 30-day partial refund with 10% fee for annual plans, and notes monthly cancellation flexibility; all grounded in Documents 1 and 2.""
+}",true,70.148,0.00972498,1116,4290,,ok,stop
+openai/gpt-6.1-sol,openai/gpt-6.1-sol,A,1,1,5,5,5,"The answer concisely and clearly addresses referral availability and benefits, but although Document 2 supports two free months with annual billing, no source supports the promised referral bonus or support-team referral process.","{""accuracy"":1,""brevity"":5,""coverage"":5,""tone_clarity"":5,""reasoning"":""The answer concisely and clearly addresses referral availability and benefits, but although Document 2 supports two free months with annual billing, no source supports the promised referral bonus or support-team referral process.""}",true,12.204,0.0044385,1064,178,,ok,stop
+openai/gpt-6.1-sol,openai/gpt-6.1-sol,A,2,1,5,3,5,"Document 2 supports two free months with annual billing, but no source supports referral bonuses or the support-team procedure; the answer is concise and clear but does not specify whether the referred friend receives an extra benefit.","{""accuracy"":1,""brevity"":5,""coverage"":3,""tone_clarity"":5,""reasoning"":""Document 2 supports two free months with annual billing, but no source supports referral bonuses or the support-team procedure; the answer is concise and clear but does not specify whether the referred friend receives an extra benefit.""}",true,7.087,0.0016121,1064,150,,ok,stop
+openai/gpt-6.1-sol,openai/gpt-6.1-sol,A,3,1,4,3,5,"Document 2 supports two free months with annual billing, but no source supports referral bonuses or a referral-reporting procedure; the answer is clear and mostly concise but does not clarify whether the friend receives an extra referral reward.","{
+  ""accuracy"": 1,
+  ""brevity"": 4,
+  ""coverage"": 3,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Document 2 supports two free months with annual billing, but no source supports referral bonuses or a referral-reporting procedure; the answer is clear and mostly concise but does not clarify whether the friend receives an extra referral reward.""
+}",true,9.163,0.0021621,1064,205,,ok,stop
+openai/gpt-6.1-sol,openai/gpt-6.1-sol,B,1,3,5,5,5,"Document 1 supports a full, no-questions-asked refund upon cancellation within 14 days, but neither cancellation through billing settings nor refunding the original payment method is documented; the answer is otherwise concise, clear, and complete.","{""accuracy"":3,""brevity"":5,""coverage"":5,""tone_clarity"":5,""reasoning"":""Document 1 supports a full, no-questions-asked refund upon cancellation within 14 days, but neither cancellation through billing settings nor refunding the original payment method is documented; the answer is otherwise concise, clear, and complete.""}",true,6.318,0.003391,1045,78,,ok,stop
+openai/gpt-6.1-sol,openai/gpt-6.1-sol,B,2,3,5,5,5,"Document 1 supports a full refund for cancellation within 14 days of the first paid subscription, but cancellation through billing settings and refunds to the original payment method are unsupported; the answer is otherwise concise, complete, and clear.","{""accuracy"":3,""brevity"":5,""coverage"":5,""tone_clarity"":5,""reasoning"":""Document 1 supports a full refund for cancellation within 14 days of the first paid subscription, but cancellation through billing settings and refunds to the original payment method are unsupported; the answer is otherwise concise, complete, and clear.""}",true,12.009,0.0011202,1045,101,,ok,stop
+openai/gpt-6.1-sol,openai/gpt-6.1-sol,B,3,3,5,5,5,"Document 1 supports a full, no-questions-asked refund upon cancellation within 14 days of the first paid subscription, but neither cancellation through billing settings nor refunding the original payment method is documented; the answer is otherwise concise, complete, and clear.","{""accuracy"":3,""brevity"":5,""coverage"":5,""tone_clarity"":5,""reasoning"":""Document 1 supports a full, no-questions-asked refund upon cancellation within 14 days of the first paid subscription, but neither cancellation through billing settings nor refunding the original payment method is documented; the answer is otherwise concise, complete, and clear.""}",true,8.72,0.0012402,1045,113,,ok,stop
+openai/gpt-6.1-sol,openai/gpt-6.1-sol,C,1,1,4,5,5,Document 1 explicitly excludes refunds for downgrade price differences and applies savings next cycle; the answer directly and clearly addresses the question but contradicts this policy and adds unsupported refund timing and payment-method details.,"{""accuracy"":1,""brevity"":4,""coverage"":5,""tone_clarity"":5,""reasoning"":""Document 1 explicitly excludes refunds for downgrade price differences and applies savings next cycle; the answer directly and clearly addresses the question but contradicts this policy and adds unsupported refund timing and payment-method details.""}",true,3.18,0.003306,1043,70,,ok,stop
+openai/gpt-6.1-sol,openai/gpt-6.1-sol,C,2,1,5,5,5,"The answer is concise, clear, and directly addresses the question, but Document 1 explicitly prohibits current-cycle downgrade refunds; the claimed guarantee coverage, prorated refund, payment method, and processing timeline are unsupported.","{""accuracy"":1,""brevity"":5,""coverage"":5,""tone_clarity"":5,""reasoning"":""The answer is concise, clear, and directly addresses the question, but Document 1 explicitly prohibits current-cycle downgrade refunds; the claimed guarantee coverage, prorated refund, payment method, and processing timeline are unsupported.""}",true,4.8,0.00084,1043,73,,ok,stop
+openai/gpt-6.1-sol,openai/gpt-6.1-sol,C,3,1,4,5,5,"The answer clearly addresses the refund question but adds unnecessary timing details; Document 1 explicitly denies current-cycle downgrade refunds, with savings starting next cycle, and provides no support for refund timing or payment method.","{""accuracy"":1,""brevity"":4,""coverage"":5,""tone_clarity"":5,""reasoning"":""The answer clearly addresses the refund question but adds unnecessary timing details; Document 1 explicitly denies current-cycle downgrade refunds, with savings starting next cycle, and provides no support for refund timing or payment method.""}",true,3.172,0.00082,1043,71,,ok,stop
+openai/gpt-6.1-sol,openai/gpt-6.1-sol,D,1,5,3,5,2,"Document 3 supports restoring all data by reactivating within 30 days and permanent deletion afterward; the answer fully addresses recovery but repeats the deadline and uses overly casual, insensitive phrasing such as “lol.”","{
+  ""accuracy"": 5,
+  ""brevity"": 3,
+  ""coverage"": 5,
+  ""tone_clarity"": 2,
+  ""reasoning"": ""Document 3 supports restoring all data by reactivating within 30 days and permanent deletion afterward; the answer fully addresses recovery but repeats the deadline and uses overly casual, insensitive phrasing such as “lol.”""
+}",true,10.95,0.003951,1045,134,,ok,stop
+openai/gpt-6.1-sol,openai/gpt-6.1-sol,D,2,5,3,5,2,"Document 3 confirms reactivation within 30 days restores all data and later deletion is permanent; the answer fully addresses recovery but repeats the deadline and uses flippant, pressuring language, especially “act fast lol.”","{""accuracy"":5,""brevity"":3,""coverage"":5,""tone_clarity"":2,""reasoning"":""Document 3 confirms reactivation within 30 days restores all data and later deletion is permanent; the answer fully addresses recovery but repeats the deadline and uses flippant, pressuring language, especially “act fast lol.”""}",true,7.31,0.0008602,1045,75,,ok,stop
+openai/gpt-6.1-sol,openai/gpt-6.1-sol,D,3,5,3,5,2,"Document 3 confirms reactivation within 30 days restores all data and later deletion is permanent; the answer fully addresses recovery but repeats the deadline and uses flippant, unprofessional language, especially “lol.”","{""accuracy"":5,""brevity"":3,""coverage"":5,""tone_clarity"":2,""reasoning"":""Document 3 confirms reactivation within 30 days restores all data and later deletion is permanent; the answer fully addresses recovery but repeats the deadline and uses flippant, unprofessional language, especially “lol.”""}",true,7.618,0.0008402,1045,73,,ok,stop
+openai/gpt-6.1-sol,openai/gpt-6.1-sol,E,1,1,5,5,5,"The answer is concise, clear, and directly addresses the question, but contradicts Document 3: Enterprise custom retention applies only to active subscriptions; after cancellation, all tiers’ data is permanently deleted after 30 days.","{""accuracy"":1,""brevity"":5,""coverage"":5,""tone_clarity"":5,""reasoning"":""The answer is concise, clear, and directly addresses the question, but contradicts Document 3: Enterprise custom retention applies only to active subscriptions; after cancellation, all tiers’ data is permanently deleted after 30 days.""}",true,3.611,0.003406,1063,75,,ok,stop
+openai/gpt-6.1-sol,openai/gpt-6.1-sol,E,2,1,5,5,5,"The answer directly, concisely, and clearly addresses the question, but contradicts Document 3: Enterprise custom retention applies only to active subscriptions; canceled accounts’ data is permanently deleted after 30 days for every tier.","{""accuracy"":1,""brevity"":5,""coverage"":5,""tone_clarity"":5,""reasoning"":""The answer directly, concisely, and clearly addresses the question, but contradicts Document 3: Enterprise custom retention applies only to active subscriptions; canceled accounts’ data is permanently deleted after 30 days for every tier.""}",true,5.271,0.000872,1063,76,,ok,stop
+openai/gpt-6.1-sol,openai/gpt-6.1-sol,E,3,1,5,5,5,"The answer is concise, clear, and directly addresses the question, but contradicts Document 3: Enterprise custom retention applies only to active subscriptions; after cancellation, all tiers’ data is permanently deleted after 30 days.","{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The answer is concise, clear, and directly addresses the question, but contradicts Document 3: Enterprise custom retention applies only to active subscriptions; after cancellation, all tiers’ data is permanently deleted after 30 days.""
+}",true,3.789,0.001012,1063,90,,ok,stop
+openai/gpt-6.1-sol,openai/gpt-6.1-sol,F,1,3,3,3,4,"Document 2 supports three retries over seven days, but not the claimed likelihood of resolution; the answer adds unnecessary pleasantries and omits suspension after failed retries and Document 3’s 30-day recovery window and permanent deletion after cancellation.","{""accuracy"":3,""brevity"":3,""coverage"":3,""tone_clarity"":4,""reasoning"":""Document 2 supports three retries over seven days, but not the claimed likelihood of resolution; the answer adds unnecessary pleasantries and omits suspension after failed retries and Document 3’s 30-day recovery window and permanent deletion after cancellation.""}",true,7.38,0.003976,1051,135,,ok,stop
+openai/gpt-6.1-sol,openai/gpt-6.1-sol,F,2,3,3,3,4,"Document 2 supports three retries over seven days, but not likely resolution; the answer omits suspension after failed retries and Document 3’s 30-day post-cancellation recovery window before permanent deletion. Friendly wording is clear but includes unnecessary boilerplate.","{""accuracy"":3,""brevity"":3,""coverage"":3,""tone_clarity"":4,""reasoning"":""Document 2 supports three retries over seven days, but not likely resolution; the answer omits suspension after failed retries and Document 3’s 30-day post-cancellation recovery window before permanent deletion. Friendly wording is clear but includes unnecessary boilerplate.""}",true,8.333,0.0013908,1051,128,,ok,stop
+openai/gpt-6.1-sol,openai/gpt-6.1-sol,F,3,3,3,3,4,"Document 2 supports three retries over seven days, but not likely self-resolution; the answer adds filler and omits suspension after failed retries and Document 3’s 30-day recoverability after cancellation, making its otherwise clear reassurance premature.","{""accuracy"":3,""brevity"":3,""coverage"":3,""tone_clarity"":4,""reasoning"":""Document 2 supports three retries over seven days, but not likely self-resolution; the answer adds filler and omits suspension after failed retries and Document 3’s 30-day recoverability after cancellation, making its otherwise clear reassurance premature.""}",true,4.694,0.004016,1051,139,,ok,stop
+openai/gpt-6.1-sol,openai/gpt-6.1-sol,G,1,3,5,5,5,"The $24 annual savings matches Document 2, but the refund explanation overlooks Document 1’s 14-day full-refund guarantee for new subscribers; otherwise, the answer concisely and clearly covers savings and cancellation flexibility.","{
+  ""accuracy"": 3,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The $24 annual savings matches Document 2, but the refund explanation overlooks Document 1’s 14-day full-refund guarantee for new subscribers; otherwise, the answer concisely and clearly covers savings and cancellation flexibility.""
+}",true,5.935,0.0048885,1068,222,,ok,stop
+openai/gpt-6.1-sol,openai/gpt-6.1-sol,G,2,3,5,3,5,"The $24 annual savings follows Document 2, but Document 1 guarantees new subscribers a full refund within 14 days; the answer omits this exception and monthly post-window refund limits, while remaining concise and clear.","{
+  ""accuracy"": 3,
+  ""brevity"": 5,
+  ""coverage"": 3,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The $24 annual savings follows Document 2, but Document 1 guarantees new subscribers a full refund within 14 days; the answer omits this exception and monthly post-window refund limits, while remaining concise and clear.""
+}",true,18.399,0.0049385,1068,227,,ok,stop
+openai/gpt-6.1-sol,openai/gpt-6.1-sol,G,3,3,5,3,5,"The concise, clear answer correctly explains Document 2’s $24 annual savings, but its refund comparison omits Document 1’s 14-day full-refund guarantee for new subscribers, making the annual refund restriction misleading and coverage incomplete.","{
+  ""accuracy"": 3,
+  ""brevity"": 5,
+  ""coverage"": 3,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The concise, clear answer correctly explains Document 2’s $24 annual savings, but its refund comparison omits Document 1’s 14-day full-refund guarantee for new subscribers, making the annual refund restriction misleading and coverage incomplete.""
+}",true,11.386,0.0020125,1068,190,,ok,stop
+qwen/qwen3.5-35b-a3b,qwen/qwen3.5-35b-a3b,A,1,1,5,5,5,"The answer is inaccurate because it invents a referral program absent from Document 2, though it is concise and clear.","
+
+{""accuracy"": 1, ""brevity"": 5, ""coverage"": 5, ""tone_clarity"": 5, ""reasoning"": ""The answer is inaccurate because it invents a referral program absent from Document 2, though it is concise and clear.""}",true,23.837,0.00270874,1178,3486,,ok,stop
+qwen/qwen3.5-35b-a3b,qwen/qwen3.5-35b-a3b,A,2,1,5,5,5,"Accuracy is 1 due to hallucinated referral claims, while other scores are 5; Document 2 only details annual billing discounts.","
+
+{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Accuracy is 1 due to hallucinated referral claims, while other scores are 5; Document 2 only details annual billing discounts.""
+}",true,28.751,0.00278599,1178,3589,,ok,stop
+qwen/qwen3.5-35b-a3b,qwen/qwen3.5-35b-a3b,A,3,1,5,5,5,"While Document 2 states annual plans include two months free, none of the provided texts mention a referral program, making the candidate's bonus claim entirely unsupported by the source material.","{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""While Document 2 states annual plans include two months free, none of the provided texts mention a referral program, making the candidate's bonus claim entirely unsupported by the source material.""
+}",true,13.819,0.0027223625,1129,1953,,ok,stop
+qwen/qwen3.5-35b-a3b,qwen/qwen3.5-35b-a3b,B,1,5,5,5,5,"Document 1 confirms the 14-day refund guarantee for the Team plan, making the core policy accurate, while the response remains concise and clear.","{
+  ""accuracy"": 5,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Document 1 confirms the 14-day refund guarantee for the Team plan, making the core policy accurate, while the response remains concise and clear.""
+}",true,95.632,0.00597126,1109,5816,,ok,stop
+qwen/qwen3.5-35b-a3b,qwen/qwen3.5-35b-a3b,B,2,5,5,5,5,"The answer accurately reflects the 14-day money-back guarantee in Document 1, which is the primary factual claim, without contradictions.","
+
+{""accuracy"": 5, ""brevity"": 5, ""coverage"": 5, ""tone_clarity"": 5, ""reasoning"": ""The answer accurately reflects the 14-day money-back guarantee in Document 1, which is the primary factual claim, without contradictions.""}",true,26.407,0.0031783,1160,4114,,ok,stop
+qwen/qwen3.5-35b-a3b,qwen/qwen3.5-35b-a3b,B,3,3,5,5,5,"Accuracy is 3 due to unsupported cancellation path and refund method claims, though refund eligibility aligns with Document 1; brevity, coverage, and tone score 5 as they are relevant, complete, and clear.","{
+  ""accuracy"": 3,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Accuracy is 3 due to unsupported cancellation path and refund method claims, though refund eligibility aligns with Document 1; brevity, coverage, and tone score 5 as they are relevant, complete, and clear.""
+}",true,46.678,0.00590478,1127,5747,,ok,stop
+qwen/qwen3.5-35b-a3b,qwen/qwen3.5-35b-a3b,C,1,1,5,5,5,"Accuracy is 1 per Document 1, which denies refunds on downgrades, contradicting the answer, while brevity, coverage, and tone remain 5.","{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Accuracy is 1 per Document 1, which denies refunds on downgrades, contradicting the answer, while brevity, coverage, and tone remain 5.""
+}",true,32.242,0.00457152,1123,2390,,ok,stop
+qwen/qwen3.5-35b-a3b,qwen/qwen3.5-35b-a3b,C,2,1,5,5,5,"Accuracy is 1 because Document 1 states downgrades do not refund price differences; brevity, coverage, and tone score 5 for conciseness and clarity.","{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Accuracy is 1 because Document 1 states downgrades do not refund price differences; brevity, coverage, and tone score 5 for conciseness and clarity.""
+}",true,30.904,0.00365445,1123,3486,,ok,stop
+qwen/qwen3.5-35b-a3b,qwen/qwen3.5-35b-a3b,C,3,1,5,5,5,"Document 1 explicitly states downgrades do not refund the price difference for the current billing cycle, contradicting the candidate's false assurance of a prorated refund.","{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Document 1 explicitly states downgrades do not refund the price difference for the current billing cycle, contradicting the candidate's false assurance of a prorated refund.""
+}",true,13.863,0.00186422,1123,1707,,ok,stop
+qwen/qwen3.5-35b-a3b,qwen/qwen3.5-35b-a3b,D,1,5,5,5,3,"Accuracy, coverage, and brevity score 5 per Document 3, but tone is 3 as ""lol"" is overly informal.","{
+  ""accuracy"": 5,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 3,
+  ""reasoning"": ""Accuracy, coverage, and brevity score 5 per Document 3, but tone is 3 as \""lol\"" is overly informal.""
+}",true,31.816,0.0058395,1130,5670,,ok,stop
+qwen/qwen3.5-35b-a3b,qwen/qwen3.5-35b-a3b,D,2,5,5,5,3,"Source Document 3 validates the 30-day claim, while brevity and coverage score 5, but tone is 3 due to excessive informality like 'yeah' and 'lol' unsuitable for professional support.","{
+  ""accuracy"": 5,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 3,
+  ""reasoning"": ""Source Document 3 validates the 30-day claim, while brevity and coverage score 5, but tone is 3 due to excessive informality like 'yeah' and 'lol' unsuitable for professional support.""
+}",true,23.235,0.0044982,1130,4340,,ok,stop
+qwen/qwen3.5-35b-a3b,qwen/qwen3.5-35b-a3b,D,3,5,4,5,3,"Accuracy and coverage are 5 per Doc 3, brevity is 4, and tone is 3 due to unprofessional slang like 'lol' violating support standards.","{
+  ""accuracy"": 5,
+  ""brevity"": 4,
+  ""coverage"": 5,
+  ""tone_clarity"": 3,
+  ""reasoning"": ""Accuracy and coverage are 5 per Doc 3, brevity is 4, and tone is 3 due to unprofessional slang like 'lol' violating support standards.""
+}",true,25.08,0.0041102,1130,3952,,ok,stop
+qwen/qwen3.5-35b-a3b,qwen/qwen3.5-35b-a3b,E,1,,,,,,,false,111.237,0.01509576,1197,20000,,truncated,length
+qwen/qwen3.5-35b-a3b,qwen/qwen3.5-35b-a3b,E,2,1,5,5,5,"Scores reflect high brevity and clarity, but accuracy is 1 as Document 3 limits custom retention to active accounts, contradicting claims about post-cancellation data.","{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Scores reflect high brevity and clarity, but accuracy is 1 as Document 3 limits custom retention to active accounts, contradicting claims about post-cancellation data.""
+}",true,45.668,0.00382344,1146,3663,,ok,stop
+qwen/qwen3.5-35b-a3b,qwen/qwen3.5-35b-a3b,E,3,1,5,5,5,"Accuracy is 1 as Document 3 limits custom retention to active accounts, contradicting claims about post-cancellation extensions, while other dimensions are accurate.","{""accuracy"":1,""brevity"":5,""coverage"":5,""tone_clarity"":5,""reasoning"":""Accuracy is 1 as Document 3 limits custom retention to active accounts, contradicting claims about post-cancellation extensions, while other dimensions are accurate.""}",true,48.925,0.00182076,1197,2300,,ok,stop
+qwen/qwen3.5-35b-a3b,qwen/qwen3.5-35b-a3b,F,1,5,5,3,5,"Docs 2 and 3 confirm accuracy and clarity, yet coverage suffers as the response omits Doc 3's suspension data risks despite answering the retry question correctly.","{
+  ""accuracy"": 5,
+  ""brevity"": 5,
+  ""coverage"": 3,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Docs 2 and 3 confirm accuracy and clarity, yet coverage suffers as the response omits Doc 3's suspension data risks despite answering the retry question correctly.""
+}",true,22.809,0.005031975,1134,3729,,ok,stop
+qwen/qwen3.5-35b-a3b,qwen/qwen3.5-35b-a3b,F,2,5,5,3,5,"Accuracy and brevity score 5 per Document 2, coverage scores 3 for omitting Document 3's data retention policy, and tone scores 5 for clarity.","{
+  ""accuracy"": 5,
+  ""brevity"": 5,
+  ""coverage"": 3,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Accuracy and brevity score 5 per Document 2, coverage scores 3 for omitting Document 3's data retention policy, and tone scores 5 for clarity.""
+}",true,34.594,0.0053678,1132,5198,,ok,stop
+qwen/qwen3.5-35b-a3b,qwen/qwen3.5-35b-a3b,F,3,,,,,,,false,234.984,0.01509464,1183,20000,,truncated,length
+qwen/qwen3.5-35b-a3b,qwen/qwen3.5-35b-a3b,G,1,3,5,3,5,"Accuracy 3 and coverage 3 result from omitting Document 1's 14-day full refund guarantee for monthly plans, while brevity 5 and tone 5 are justified by concise, clear writing.","{
+  ""accuracy"": 3,
+  ""brevity"": 5,
+  ""coverage"": 3,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Accuracy 3 and coverage 3 result from omitting Document 1's 14-day full refund guarantee for monthly plans, while brevity 5 and tone 5 are justified by concise, clear writing.""
+}",true,73.255,0.00533641,1202,6987,,ok,stop
+qwen/qwen3.5-35b-a3b,qwen/qwen3.5-35b-a3b,G,2,3,5,3,5,"Accuracy and Coverage are 3 due to missing 14-day money-back guarantee per Document 1, while Brevity and Tone are 5 for clarity and conciseness.","
+
+{
+  ""accuracy"": 3,
+  ""brevity"": 5,
+  ""coverage"": 3,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Accuracy and Coverage are 3 due to missing 14-day money-back guarantee per Document 1, while Brevity and Tone are 5 for clarity and conciseness.""
+}",true,35.706,0.00401416,1202,5224,,ok,stop
+qwen/qwen3.5-35b-a3b,qwen/qwen3.5-35b-a3b,G,3,3,5,4,5,Accuracy 3 due to 'less flexible' claim contradicting refund windows; 14-day money-back guarantee exists for all new subscribers. Doc 1 and 2 support pricing and partial refund details accurately.,"{""accuracy"": 3, ""brevity"": 5, ""coverage"": 4, ""tone_clarity"": 5, ""reasoning"": ""Accuracy 3 due to 'less flexible' claim contradicting refund windows; 14-day money-back guarantee exists for all new subscribers. Doc 1 and 2 support pricing and partial refund details accurately.""}",true,35.941,0.00446341,1202,5823,,ok,stop
+qwen/qwen3.5-397b-a17b,qwen/qwen3.5-397b-a17b,A,1,1,5,5,5,"Accuracy is 1 because Documents 1-3 mention no referral program, making the bonus claim unsupported, though the answer is concise, covers all questions, and maintains a clear tone.","{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Accuracy is 1 because Documents 1-3 mention no referral program, making the bonus claim unsupported, though the answer is concise, covers all questions, and maintains a clear tone.""
+}",true,83.671,0.01150125,1145,3662,,ok,stop
+qwen/qwen3.5-397b-a17b,qwen/qwen3.5-397b-a17b,A,2,1,3,5,5,"The answer falsely claims a referral bonus exists, which contradicts Source Documents 1-3 that contain no mention of any referral program or extra months for referrals.","{
+  ""accuracy"": 1,
+  ""brevity"": 3,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The answer falsely claims a referral bonus exists, which contradicts Source Documents 1-3 that contain no mention of any referral program or extra months for referrals.""
+}",true,33.122,0.00708135,1147,1843,,ok,stop
+qwen/qwen3.5-397b-a17b,qwen/qwen3.5-397b-a17b,A,3,1,5,5,5,"Accuracy is 1 as no source document mentions referrals, contradicting the claimed bonus beyond Document 2 annual discount; other dimensions score high for clarity and coverage.","{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Accuracy is 1 as no source document mentions referrals, contradicting the claimed bonus beyond Document 2 annual discount; other dimensions score high for clarity and coverage.""
+}",true,106.378,0.01442325,1145,4636,,ok,stop
+qwen/qwen3.5-397b-a17b,qwen/qwen3.5-397b-a17b,B,1,5,5,5,5,"The answer accurately cites Document 1's 14-day full refund policy for new subscribers, directly addressing the user's two-day-old Team plan inquiry with clear, concise, and complete information.","{
+  ""accuracy"": 5,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The answer accurately cites Document 1's 14-day full refund policy for new subscribers, directly addressing the user's two-day-old Team plan inquiry with clear, concise, and complete information.""
+}",true,114.565,0.01598259,1129,6642,,ok,stop
+qwen/qwen3.5-397b-a17b,qwen/qwen3.5-397b-a17b,B,2,5,5,5,5,"The answer accurately cites Document 1's 14-day money-back guarantee for new subscribers, providing a concise, complete, and clear confirmation of the full refund eligibility.","{
+  ""accuracy"": 5,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The answer accurately cites Document 1's 14-day money-back guarantee for new subscribers, providing a concise, complete, and clear confirmation of the full refund eligibility.""
+}",true,104.592,0.01463943,1129,6068,,ok,stop
+qwen/qwen3.5-397b-a17b,qwen/qwen3.5-397b-a17b,B,3,3,5,5,5,"Accuracy is 3 because details like 'billing settings' and refund method lack source support, though the 14-day guarantee aligns with Document 1; other dimensions score 5.","{
+  ""accuracy"": 3,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Accuracy is 3 because details like 'billing settings' and refund method lack source support, though the 14-day guarantee aligns with Document 1; other dimensions score 5.""
+}",true,24.238,0.0242094,1127,6537,,ok,stop
+qwen/qwen3.5-397b-a17b,qwen/qwen3.5-397b-a17b,C,1,1,5,5,5,"The answer falsely claims a prorated refund, directly contradicting Document 1 which states downgrades do not refund price differences for the current cycle.","{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The answer falsely claims a prorated refund, directly contradicting Document 1 which states downgrades do not refund price differences for the current cycle.""
+}",true,64.517,0.00916929,1125,3731,,ok,stop
+qwen/qwen3.5-397b-a17b,qwen/qwen3.5-397b-a17b,C,2,1,5,5,5,"The answer falsely claims a prorated refund, directly contradicting Document 1 which states no price difference is refunded for downgrades.","{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The answer falsely claims a prorated refund, directly contradicting Document 1 which states no price difference is refunded for downgrades.""
+}",true,83.541,0.01169649,1125,4811,,ok,stop
+qwen/qwen3.5-397b-a17b,qwen/qwen3.5-397b-a17b,C,3,1,5,5,5,"Document 1 states downgrades do not refund price differences for the current billing cycle, contradicting the candidate's false refund claim, so accuracy is low while tone, coverage, and brevity remain high due to clear, direct responding.","{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Document 1 states downgrades do not refund price differences for the current billing cycle, contradicting the candidate's false refund claim, so accuracy is low while tone, coverage, and brevity remain high due to clear, direct responding.""
+}",true,117.077,0.02697825,1123,5808,,ok,stop
+qwen/qwen3.5-397b-a17b,qwen/qwen3.5-397b-a17b,D,1,5,5,5,3,"Accurate per Document 3's 30-day recovery rule, but the informal tone ('lol', 'no way around it') lacks professional clarity.","{
+  ""accuracy"": 5,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 3,
+  ""reasoning"": ""Accurate per Document 3's 30-day recovery rule, but the informal tone ('lol', 'no way around it') lacks professional clarity.""
+}",true,97.349,0.0209292,1132,5625,,ok,stop
+qwen/qwen3.5-397b-a17b,qwen/qwen3.5-397b-a17b,D,2,5,5,5,3,"Accurate per Document 3's 30-day recovery window, but the overly casual tone ('lol') and slang reduce professional clarity.","{
+  ""accuracy"": 5,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 3,
+  ""reasoning"": ""Accurate per Document 3's 30-day recovery window, but the overly casual tone ('lol') and slang reduce professional clarity.""
+}",true,98.981,0.0213072,1132,5730,,ok,stop
+qwen/qwen3.5-397b-a17b,qwen/qwen3.5-397b-a17b,D,3,5,5,5,3,"Accuracy, brevity, and coverage align with Document 3, but tone_clarity is lower due to overly informal language like ""lol"" and ""yeah so,"" which deviates from professional support standards despite clear communication.","{
+  ""accuracy"": 5,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 3,
+  ""reasoning"": ""Accuracy, brevity, and coverage align with Document 3, but tone_clarity is lower due to overly informal language like \""lol\"" and \""yeah so,\"" which deviates from professional support standards despite clear communication.""
+}",true,20.943,0.0227784,1130,6139,,ok,stop
+qwen/qwen3.5-397b-a17b,qwen/qwen3.5-397b-a17b,E,1,1,4,5,5,"The answer falsely claims post-cancellation retention can be extended, contradicting Document 3 which limits custom retention to active accounts only.","{
+  ""accuracy"": 1,
+  ""brevity"": 4,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The answer falsely claims post-cancellation retention can be extended, contradicting Document 3 which limits custom retention to active accounts only.""
+}",true,61.684,0.0130424,1148,3546,,ok,stop
+qwen/qwen3.5-397b-a17b,qwen/qwen3.5-397b-a17b,E,2,1,5,5,5,"The answer falsely claims custom retention applies post-cancellation, contradicting Document 3 which limits it to active accounts.","{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""The answer falsely claims custom retention applies post-cancellation, contradicting Document 3 which limits it to active accounts.""
+}",true,47.083,0.00671658,1148,2679,,ok,stop
+qwen/qwen3.5-397b-a17b,qwen/qwen3.5-397b-a17b,E,3,1,5,5,5,"Accuracy scores 1 because Document 3 limits custom retention to active accounts, though brevity, coverage, and tone score 5 due to the response's concise and clear structure.","{
+  ""accuracy"": 1,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Accuracy scores 1 because Document 3 limits custom retention to active accounts, though brevity, coverage, and tone score 5 due to the response's concise and clear structure.""
+}",true,631.169,0.0175668,1146,4839,,ok,stop
+qwen/qwen3.5-397b-a17b,qwen/qwen3.5-397b-a17b,F,1,5,5,3,5,"Accuracy aligns with Document 2 retry policy, but coverage is incomplete as it omits data risk consequences upon suspension detailed in Document 3.","{
+  ""accuracy"": 5,
+  ""brevity"": 5,
+  ""coverage"": 3,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Accuracy aligns with Document 2 retry policy, but coverage is incomplete as it omits data risk consequences upon suspension detailed in Document 3.""
+}",true,401.886,0.0105976,1132,2850,,ok,stop
+qwen/qwen3.5-397b-a17b,qwen/qwen3.5-397b-a17b,F,2,5,5,3,5,"Accuracy matches Document 2, and tone is clear, but coverage is incomplete as the answer omits data retention risks during suspension found in Document 3.","{
+  ""accuracy"": 5,
+  ""brevity"": 5,
+  ""coverage"": 3,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Accuracy matches Document 2, and tone is clear, but coverage is incomplete as the answer omits data retention risks during suspension found in Document 3.""
+}",true,13.842,0.01455,1132,3853,,ok,stop
+qwen/qwen3.5-397b-a17b,qwen/qwen3.5-397b-a17b,F,3,3,5,3,5,Accurately cites the 3 retries over 7 days (Doc 2) but omits the critical risk of suspension and data loss after 30 days if payment fails.,"{
+  ""accuracy"": 3,
+  ""brevity"": 5,
+  ""coverage"": 3,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Accurately cites the 3 retries over 7 days (Doc 2) but omits the critical risk of suspension and data loss after 30 days if payment fails.""
+}",true,61.9,0.00876798,1134,3558,,ok,stop
+qwen/qwen3.5-397b-a17b,qwen/qwen3.5-397b-a17b,G,1,5,5,5,4,"Policy details align with Documents 1 and 2, but the greeting assumes a completed purchase contrary to the question's context.","{
+  ""accuracy"": 5,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 4,
+  ""reasoning"": ""Policy details align with Documents 1 and 2, but the greeting assumes a completed purchase contrary to the question's context.""
+}",true,882.282,0.02505823,1151,7045,,ok,stop
+qwen/qwen3.5-397b-a17b,qwen/qwen3.5-397b-a17b,G,2,3,5,5,5,"Accuracy scores 3 due to misleading refund flexibility claims contradicting Document 1 14-day monthly refund windows, while other dimensions score 5 for concise, relevant, and clear coverage of pricing benefits.","{
+  ""accuracy"": 3,
+  ""brevity"": 5,
+  ""coverage"": 5,
+  ""tone_clarity"": 5,
+  ""reasoning"": ""Accuracy scores 3 due to misleading refund flexibility claims contradicting Document 1 14-day monthly refund windows, while other dimensions score 5 for concise, relevant, and clear coverage of pricing benefits.""
+}",true,210.956,0.01531641,1151,4328,,ok,stop
+qwen/qwen3.5-397b-a17b,qwen/qwen3.5-397b-a17b,G,3,3,5,3,3,"Scores reflect the incorrect greeting and omission of the 14-day monthly refund guarantee for new subscribers outlined in Document 1, impacting accuracy, tone, and coverage.","{
+  ""accuracy"": 3,
+  ""brevity"": 5,
+  ""coverage"": 3,
+  ""tone_clarity"": 3,
+  ""reasoning"": ""Scores reflect the incorrect greeting and omission of the 14-day monthly refund guarantee for new subscribers outlined in Document 1, impacting accuracy, tone, and coverage.""
+}",true,230.468,0.02515141,1151,7138,,ok,stop
