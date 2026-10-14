@@ -1,8 +1,8 @@
 # Finding a Reliable LLM Judge
 
-Which language model is the most trustworthy judge of customer-support answers? This project compares eight LLMs as judges of seven AI-written answers for **Nimbus Cloud**, a fictional company. Three short policy documents are the only ground truth, so every claim in an answer can be checked against them.
+Which LLM is the most trustworthy judge of customer-support answers? This project compares eight LLMs as judges of seven AI-written answers for **Nimbus Cloud**, a fictional company. Three short policy documents are the only ground truth, so every claim in an answer can be checked against them.
 
-Each judge scores every answer from 1 to 5 on **accuracy**, **brevity**, **coverage** and **tone/clarity**. Its scores are compared with a hand-written gold reference, and it is also compared on error rate, cost, speed and run-to-run consistency.
+Each judge scores every answer from 1 to 5 on **accuracy**, **brevity**, **coverage** and **tone/clarity** . Its scores are compared with a human-written gold reference, and it is also compared on error rate, cost, speed and run-to-run consistency.
 
 **Full results and discussion: [REPORT.md](REPORT.md)**
 
@@ -11,7 +11,7 @@ Each judge scores every answer from 1 to 5 on **accuracy**, **brevity**, **cover
 | Judge | MAE vs gold (lower is better) | Scores within ±1 of gold | Verdict match | Error rate | Mean cost per call | Mean latency |
 |---|---|---|---|---|---|---|
 | Claude Sonnet 5.5 | **0.725** | **88.75%** | **100%** | 4.76% | 0.57¢ | 3.4 s |
-| Llama 4 Maverick | 0.810 | 78.57% | 42.86% | 0% | 0.03¢ | 1.9 s |
+| Llama 4 Maverick | 0.810 | 78.57% | 42.86% | 0% | **0.03¢** | **1.9 s** |
 | GPT-6.1 Sol | 0.821 | 76.19% | 71.43% | 0% | 0.24¢ | 7.7 s |
 | Gemini 3.8 Flash | 0.917 | 72.62% | 76.19% | 0% | 0.32¢ | 6.0 s |
 | Mistral Large 4 | 0.940 | 71.43% | 61.90% | 0% | 0.83¢ | 72.3 s |
