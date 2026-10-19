@@ -55,14 +55,14 @@ Lower is better for MAE, error rate, cost, latency and consistency (which is the
 
 | Judge | Accuracy bias | Brevity bias | Coverage bias | Tone/clarity bias |
 |---|---|---|---|---|
-| Claude Sonnet 5.5 | −0.60 | +0.75 | −0.20 | +0.55 |
-| GPT-6.1 Sol | −0.57 | +1.00 | +0.19 | +1.14 |
-| Gemini 3.8 Flash | 0.00 | +1.43 | +0.57 | +1.38 |
-| Llama 4 Maverick | +0.57 | +0.38 | +0.29 | +1.43 |
-| Mistral Large 4 | −0.33 | +1.33 | +0.24 | +1.00 |
-| Qwen3.5 35B-A3B | −0.11 | +1.63 | +0.32 | +1.42 |
-| Qwen3.5 397B-A17B | −0.10 | +1.57 | +0.48 | +1.29 |
-| Cohere Command A+ | +0.38 | +0.52 | −0.19 | +1.48 |
+| Claude Sonnet 5.5 | −0.60 | +0.05 | −0.20 | −0.10 |
+| GPT-6.1 Sol | −0.57 | +0.29 | +0.19 | +0.43 |
+| Gemini 3.8 Flash | 0.00 | +0.71 | +0.57 | +0.67 |
+| Llama 4 Maverick | +0.57 | −0.33 | +0.29 | +0.71 |
+| Mistral Large 4 | −0.33 | +0.62 | +0.24 | +0.29 |
+| Qwen3.5 35B-A3B | −0.11 | +0.95 | +0.32 | +0.74 |
+| Qwen3.5 397B-A17B | −0.10 | +0.86 | +0.48 | +0.57 |
+| Cohere Command A+ | +0.38 | −0.19 | −0.19 | +0.76 |
 
 Flag precision was 100% wherever a judge flagged anything, except Cohere's single brevity flag, which the gold did not share. Where a judge never flagged a dimension, precision is undefined.
 
