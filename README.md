@@ -8,18 +8,18 @@ Each judge scores every answer from 1 to 5 on **accuracy**, **brevity**, **cover
 
 ## Headline result
 
-| Judge | MAE vs gold (lower is better) | Scores within ±1 of gold | Verdict match | Error rate | Mean cost per call | Mean latency |
-|---|---|---|---|---|---|---|
-| Claude Sonnet 5.5 | **0.725** | **88.75%** | **100%** | 4.76% | 0.57¢ | 3.4 s |
-| Llama 4 Maverick | 0.810 | 78.57% | 42.86% | 0% | 0.03¢ | 1.9 s |
-| GPT-6.1 Sol | 0.821 | 76.19% | 71.43% | 0% | 0.24¢ | 7.7 s |
-| Gemini 3.8 Flash | 0.917 | 72.62% | 76.19% | 0% | 0.32¢ | 6.0 s |
-| Mistral Large 4 | 0.940 | 71.43% | 61.90% | 0% | 0.83¢ | 72.3 s |
-| Cohere Command A+ | 1.048 | 63.10% | 42.86% | 0% | 0.19¢ | 4.8 s |
-| Qwen3.5 397B-A17B | 1.095 | 64.29% | 52.38% | 0% | 1.61¢ | 166.2 s |
-| Qwen3.5 35B-A3B | 1.105 | 63.16% | 47.37% | 9.52% | 0.51¢ | 49.3 s |
+| Judge | MAE vs gold (lower is better) | Verdict exact match | Verdict partial credit | Error rate | Mean cost per call | Mean latency | Consistency |
+|---|---|---|---|---|---|---|---|
+| Gemini 3.8 Flash | **0.560** | 76.19% | 88.10% | 0% | 0.32¢ | 6.0 s | 0.034 |
+| Claude Sonnet 5.5 | 0.588 | **100%** | **100%** | 4.76% | 0.57¢ | 3.4 s | 0.095 |
+| Llama 4 Maverick | 0.619 | 42.86% | 71.43% | 0% | 0.03¢ | 1.9 s | 0.017 |
+| GPT-6.1 Sol | 0.655 | 71.43% | 85.71% | 0% | 0.24¢ | 7.7 s | 0.095 |
+| Mistral Large 4 | 0.702 | 61.90% | 80.95% | 0% | 0.83¢ | 72.3 s | 0.193 |
+| Qwen3.5 397B-A17B | 0.762 | 52.38% | 76.19% | 0% | 1.61¢ | 166.2 s | 0.195 |
+| Qwen3.5 35B-A3B | 0.763 | 47.37% | 73.68% | 9.52% | 0.51¢ | 49.3 s | 0.067 |
+| Cohere Command A+ | 0.881 | 42.86% | 69.05% | 0% | 0.19¢ | 4.8 s | 0.170 |
 
-Claude Sonnet 5.5 agreed most closely with the gold scores and reached the correct verdict on every valid call. Cheaper models were often fast and consistent but lenient on style, and the slowest, most expensive models were not more accurate. This is a small case study (7 answers × 3 repeats per model), not a general ranking of models. See [Limitations](REPORT.md#limitations).
+Gemini 3.8 Flash had the lowest overall MAE against the gold rubric, while Claude Sonnet 5.5 achieved the strongest verdict agreement on valid calls (100% exact, 100% partial). Cheaper models were often fast and consistent but lenient on style, and the slowest, most expensive models were not more accurate. This is a small case study (7 answers × 3 repeats per model), not a general ranking of models. See [Limitations](REPORT.md#limitations).
 
 ## How the evaluation works
 
@@ -34,17 +34,14 @@ Claude Sonnet 5.5 agreed most closely with the gold scores and reached the corre
 | Column | Meaning |
 |---|---|
 | `mae_overall` | Mean absolute error between judge and gold scores across all four dimensions. **Headline measure.** |
-| `within1_overall` | Percentage of dimension scores within ±1 of gold. **Headline measure.** |
-| `verdict_exact_match` | Percentage of calls whose PASS / PARTIAL / FAIL verdict matches the gold verdict. <!-- CHECK: confirm the PARTIAL cutoff in evaluate_judges.py --> |
-| `verdict_partial_credit` | As above, but a one-level miss (e.g. PARTIAL vs FAIL) earns half credit. |
+| `verdict_exact_match` | Percentage of calls whose PASS / PARTIAL / FAIL verdict matches the gold verdict. |
+| `verdict_partial` | Partial-credit verdict agreement: an exact match earns full credit, a one-level miss earns half credit, and a two-level miss earns none. |
 | `error_rate` | Percentage of calls without a valid parsed response (`response_status` other than `ok`). |
 | `mean_cost_cents` | Mean cost per call in US cents. |
-| `mean_latency_s` | Mean seconds per call. |
-| `mean_token_spend` | Mean prompt + completion tokens per call. |
-| `within1_per_cent_second` | `within1_overall ÷ (mean cost in cents × mean latency in seconds)`. A rough value-for-money figure that rewards cheap, fast models whatever their accuracy, so read it alongside the accuracy columns. |
+| `mean_latency` | Mean seconds per call. |
 | `consistency` | Spread of a judge's overall score across the three repeats of the same answer (mean population standard deviation across answers). Lower is more consistent. |
 
-`outputs/judge_dimension_diagnostics.csv` has one row per judge and dimension: `mae`, `bias` (positive means more lenient than gold), `within1`, and flag counts with `flag_precision` and `flag_recall`. A call "flags" a dimension when it scores it as a problem (below 3) <!-- CHECK: confirm flag threshold in evaluate_judges.py -->; precision is the share of judge flags the gold also flags, and recall is the share of gold flags the judge caught. Precision is blank when a judge never flagged that dimension.
+`outputs/judge_dimension_diagnostics.csv` has one row per judge and dimension: `mae`, `bias` (positive means more lenient than gold), and flag counts with `flag_precision`. A call "flags" a dimension when it scores it as a problem (2 or below); precision is the share of judge flags the gold also flags. Precision is blank when a judge never flagged that dimension.
 
 Failed calls are excluded from the accuracy-style metrics but counted in `error_rate`.
 

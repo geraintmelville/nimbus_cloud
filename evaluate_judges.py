@@ -1,19 +1,12 @@
 """Evaluate LLM judges against the gold reference.
 
-Three layers of measurement, from most to least robust:
-
-1. Headline - raw-score agreement. Every judge score is compared directly with the
-   gold score for the same answer and rubric dimension (mean absolute error, and the
-   share of scores within +/-1 of gold). No thresholds are involved.
-2. Diagnostic - per-dimension problem flags. A score of 2 or below counts as a
-   flagged problem; precision and recall of the judge's flags are measured against
-   the gold flags, along with signed bias (positive = more lenient than gold).
-3. Comparison - three-level verdict. The lowest rubric score decides the verdict:
-   2 or below = FAIL, exactly 3 = PARTIAL, 4 or above = PASS. The gold verdict is
-   derived from the gold scores with the same rule.
+The summary compares scores, verdicts, operational errors, cost, latency and
+consistency. Dimension diagnostics report score error, bias and flag precision.
+The lowest score for an answer determines its verdict: 2 or below = FAIL,
+exactly 3 = PARTIAL, and 4 or above = PASS.
 
 Only judge calls with parse_ok == "true" are used for the agreement measures;
-every call counts towards error rate, cost, latency and token use.
+every call counts towards error rate, cost and latency.
 
 Writes:
   outputs/judge_evaluation.csv             one row per judge
@@ -33,9 +26,8 @@ REFERENCE_PATH = Path("inputs/gold_reference.csv")
 SUMMARY_PATH = Path("outputs/judge_evaluation.csv")
 DIMENSION_PATH = Path("outputs/judge_dimension_diagnostics.csv")
 
-FLAG_AT_OR_BELOW = 2  # a rubric score this low counts as a flagged problem
-PARTIAL_SCORE = 3  # a lowest score of exactly this gives a PARTIAL verdict
-TOLERANCE = 1  # "close enough" distance from the gold score
+FAIL = 2  # a rubric score this low counts as a flagged problem
+PARTIAL = 3  # a lowest score of exactly this gives a PARTIAL verdict
 VERDICT_LEVEL = {"FAIL": 0, "PARTIAL": 1, "PASS": 2}
 
 
@@ -61,12 +53,16 @@ def percent(numerator, denominator, precision=2):
     return round(100 * numerator / denominator, precision) if denominator else ""
 
 
+def is_flagged(score):
+    return score <= FAIL
+
+
 def verdict(scores):
     """FAIL if the lowest score is 2 or below, PARTIAL if it is 3, otherwise PASS."""
     lowest = min(scores)
-    if lowest <= FLAG_AT_OR_BELOW:
+    if is_flagged(lowest):
         return "FAIL"
-    if lowest == PARTIAL_SCORE:
+    if lowest == PARTIAL:
         return "PARTIAL"
     return "PASS"
 
@@ -84,18 +80,7 @@ def main():
         row["answer_id"]: {field: int(row[field]) for field in RUBRIC}
         for row in reference_rows
     }
-    gold_verdicts = {
-        answer_id: verdict(scores.values()) for answer_id, scores in gold_scores.items()
-    }
-    # The gold verdict is derived from the gold scores. Warn if the file disagrees.
-    for row in reference_rows:
-        listed = row.get("verdict", "").strip().upper()
-        derived = gold_verdicts[row["answer_id"]]
-        if listed != derived:
-            print(
-                f"Warning: gold_reference.csv lists answer {row['answer_id']} as "
-                f"{listed or 'blank'}, but its scores give {derived}. Using {derived}."
-            )
+    gold_verdicts = {row["answer_id"]: row["verdict"] for row in reference_rows}
 
     calls = defaultdict(list)
     for row in responses:
@@ -104,14 +89,11 @@ def main():
     summary_fields = [
         "judge_model",
         "mae_overall",
-        "within1_overall",
         "verdict_exact_match",
-        "verdict_partial_credit",
+        "verdict_partial",
         "error_rate",
         "mean_cost_cents",
-        "mean_latency_s",
-        "mean_token_spend",
-        "within1_per_cent_second",
+        "mean_latency",
         "consistency",
     ]
     dimension_fields = [
@@ -119,12 +101,10 @@ def main():
         "dimension",
         "mae",
         "bias",
-        "within1",
         "gold_flagged_calls",
         "judge_flagged_calls",
         "true_flags",
         "flag_precision",
-        "flag_recall",
     ]
     summary_rows = []
     dimension_rows = []
@@ -138,7 +118,7 @@ def main():
             and row["answer_id"] in gold_scores
         ]
 
-        # Option 1 (headline) and option 2 (diagnostic): per-dimension measures.
+        # Compare scores with gold for each rubric dimension.
         all_errors = []
         for dimension in RUBRIC:
             errors = [
@@ -147,9 +127,9 @@ def main():
             ]
             all_errors.extend(errors)
 
-            judge_flags = [int(row[dimension]) <= FLAG_AT_OR_BELOW for row in valid]
+            judge_flags = [is_flagged(int(row[dimension])) for row in valid]
             gold_flags = [
-                gold_scores[row["answer_id"]][dimension] <= FLAG_AT_OR_BELOW
+                is_flagged(gold_scores[row["answer_id"]][dimension])
                 for row in valid
             ]
             true_flags = sum(j and g for j, g in zip(judge_flags, gold_flags))
@@ -164,25 +144,21 @@ def main():
                         else ""
                     ),
                     "bias": round(statistics.mean(errors), 3) if errors else "",
-                    "within1": percent(
-                        sum(abs(e) <= TOLERANCE for e in errors), len(errors)
-                    ),
                     "gold_flagged_calls": sum(gold_flags),
                     "judge_flagged_calls": sum(judge_flags),
                     "true_flags": true_flags,
                     "flag_precision": percent(true_flags, sum(judge_flags)),
-                    "flag_recall": percent(true_flags, sum(gold_flags)),
                 }
             )
 
-        # Option 3 (comparison): three-level verdict.
+        # Compare each answer's verdict with the verdict derived from gold scores.
         exact_matches = 0
-        credits = []
+        partial_credit_total = 0
         for row in valid:
             judged = verdict(int(row[field]) for field in RUBRIC)
             gold = gold_verdicts[row["answer_id"]]
             exact_matches += judged == gold
-            credits.append(verdict_credit(judged, gold))
+            partial_credit_total += verdict_credit(judged, gold)
 
         # Consistency: spread of the overall score across repeats of each answer.
         repeats_by_answer = defaultdict(list)
@@ -196,27 +172,13 @@ def main():
             if len(scores) > 1
         ]
 
-        token_spend = [
-            int(row["prompt_tokens"]) + int(row["completion_tokens"])
-            for row in model_calls
-            if row["prompt_tokens"] and row["completion_tokens"]
-        ]
+        mean_cost_usd = mean_measure(model_calls, "cost_usd", 8)
         mean_cost = (
-            round(mean_measure(model_calls, "cost_usd", 8) * 100, 8)
-            if any(row["cost_usd"] for row in model_calls)
+            round(mean_cost_usd * 100, 8)
+            if mean_cost_usd != ""
             else ""
         )
         mean_latency = mean_measure(model_calls, "latency_seconds", 3)
-        within1_overall = percent(
-            sum(abs(e) <= TOLERANCE for e in all_errors), len(all_errors)
-        )
-        value_for_money = (
-            round(within1_overall / (mean_cost * mean_latency), 8)
-            if within1_overall != ""
-            and mean_cost not in ("", 0)
-            and mean_latency not in ("", 0)
-            else ""
-        )
 
         summary_rows.append(
             {
@@ -226,9 +188,8 @@ def main():
                     if all_errors
                     else ""
                 ),
-                "within1_overall": within1_overall,
                 "verdict_exact_match": percent(exact_matches, len(valid)),
-                "verdict_partial_credit": percent(sum(credits), len(credits)),
+                "verdict_partial": percent(partial_credit_total, len(valid)),
                 "error_rate": (
                     round(
                         100
@@ -244,11 +205,7 @@ def main():
                     else ""
                 ),
                 "mean_cost_cents": mean_cost,
-                "mean_latency_s": mean_latency,
-                "mean_token_spend": (
-                    round(statistics.mean(token_spend), 2) if token_spend else ""
-                ),
-                "within1_per_cent_second": value_for_money,
+                "mean_latency": mean_latency,
                 "consistency": (
                     round(statistics.mean(repeat_spreads), 3) if repeat_spreads else ""
                 ),

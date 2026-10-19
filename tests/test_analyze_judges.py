@@ -8,12 +8,18 @@ import evaluate_judges
 
 
 class AnalyzeJudgesTests(unittest.TestCase):
-    def test_writes_requested_metrics_and_error_percentage(self):
+    def test_verdict_uses_lowest_dimension_score(self):
+        self.assertEqual(evaluate_judges.verdict([2, 5]), "FAIL")
+        self.assertEqual(evaluate_judges.verdict([3, 5]), "PARTIAL")
+        self.assertEqual(evaluate_judges.verdict([4, 5]), "PASS")
+
+    def test_writes_requested_summary_and_bias_without_recall(self):
         with tempfile.TemporaryDirectory() as temporary_directory:
             temporary_path = Path(temporary_directory)
             responses_path = temporary_path / "responses.csv"
             references_path = temporary_path / "references.csv"
             output_path = temporary_path / "evaluation.csv"
+            dimension_path = temporary_path / "diagnostics.csv"
             fields = [
                 "judge_model",
                 "answer_id",
@@ -60,7 +66,8 @@ class AnalyzeJudgesTests(unittest.TestCase):
             with (
                 patch.object(evaluate_judges, "RESPONSES_PATH", responses_path),
                 patch.object(evaluate_judges, "REFERENCE_PATH", references_path),
-                patch.object(evaluate_judges, "OUTPUT_PATH", output_path),
+                patch.object(evaluate_judges, "SUMMARY_PATH", output_path),
+                patch.object(evaluate_judges, "DIMENSION_PATH", dimension_path),
                 patch.object(evaluate_judges, "JUDGE_MODELS", ["test/model"]),
             ):
                 evaluate_judges.main()
@@ -72,21 +79,43 @@ class AnalyzeJudgesTests(unittest.TestCase):
                 reader.fieldnames,
                 [
                     "judge_model",
-                    "accuracy",
+                    "mae_overall",
+                    "verdict_exact_match",
+                    "verdict_partial",
                     "error_rate",
-                    "mean_cost_usd/100",
-                    "mean_latency_s",
-                    "mean_token_spend",
-                    "accuracy/usd/second",
+                    "mean_cost_cents",
+                    "mean_latency",
                     "consistency",
                 ],
             )
             self.assertEqual(result["judge_model"], "test/model")
-            self.assertEqual(result["accuracy"], "100.0")
+            self.assertEqual(result["mae_overall"], "0")
+            self.assertEqual(result["verdict_exact_match"], "100.0")
+            self.assertEqual(result["verdict_partial"], "100.0")
             self.assertEqual(result["error_rate"], "75.0")
-            self.assertEqual(result["mean_cost_usd/100"], "1.0")
-            self.assertEqual(result["mean_latency_s"], "1.5")
-            self.assertEqual(result["accuracy/usd/second"], "66.66666667")
+            self.assertEqual(result["mean_cost_cents"], "1.0")
+            self.assertEqual(result["mean_latency"], "1.5")
+
+            with dimension_path.open(encoding="utf-8", newline="") as handle:
+                diagnostics = csv.DictReader(handle)
+                diagnostic = next(diagnostics)
+            self.assertEqual(
+                diagnostics.fieldnames,
+                [
+                    "judge_model",
+                    "dimension",
+                    "mae",
+                    "bias",
+                    "gold_flagged_calls",
+                    "judge_flagged_calls",
+                    "true_flags",
+                    "flag_precision",
+                ],
+            )
+            self.assertIn("bias", diagnostics.fieldnames)
+            self.assertNotIn("within1", diagnostics.fieldnames)
+            self.assertNotIn("flag_recall", diagnostics.fieldnames)
+            self.assertEqual(diagnostic["bias"], "0")
 
 
 if __name__ == "__main__":
