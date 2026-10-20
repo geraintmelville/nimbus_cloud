@@ -1,11 +1,9 @@
 """Evaluate LLM judges against the gold reference.
 
 The summary compares scores, verdicts, operational errors, cost, latency and
-consistency. It also reports how often judges marked gold FAILs as FAIL or
-PARTIAL/FAIL for accuracy, coverage and tone/clarity. Dimension diagnostics
-report bias and flag precision. These three-part counts are
-judge FAIL / judge PARTIAL-or-FAIL / gold FAIL calls; invalid outputs count
-only in the gold-reference total.
+consistency. Dimension diagnostics report per-dimension bias and, for accuracy,
+coverage and tone/clarity, counts in the order judge FAIL / judge
+PARTIAL-or-FAIL / gold FAIL calls. Only valid parsed calls are included.
 The lowest score for an answer determines its verdict: 2 or below = FAIL,
 exactly 3 = PARTIAL, and 4 or above = PASS.
 
@@ -90,15 +88,6 @@ def main():
         for row in reference_rows
     }
     gold_verdicts = {row["answer_id"]: row["verdict"] for row in reference_rows}
-    gold_fail_ids = {
-        label: {
-            answer_id
-            for answer_id, scores in gold_scores.items()
-            if is_flagged(scores[dimension])
-        }
-        for label, dimension in FAIL_DIMENSIONS.items()
-    }
-
     calls = defaultdict(list)
     for row in responses:
         calls[row["judge_model"]].append(row)
@@ -108,7 +97,6 @@ def main():
         "mae_overall",
         "verdict_exact_match",
         "verdict_partial",
-        *FAIL_DIMENSIONS,
         "error_rate",
         "mean_cost_cents",
         "mean_latency",
@@ -118,10 +106,9 @@ def main():
         "judge_model",
         "dimension",
         "bias",
-        "gold_flagged_calls",
-        "judge_flagged_calls",
-        "true_flags",
-        "flag_precision",
+        "judge_fail_calls",
+        "judge_partial_or_fail_calls",
+        "gold_fail_calls",
     ]
     summary_rows = []
     dimension_rows = []
@@ -144,22 +131,33 @@ def main():
             ]
             all_errors.extend(errors)
 
-            judge_flags = [is_flagged(int(row[dimension])) for row in valid]
             gold_flags = [
                 is_flagged(gold_scores[row["answer_id"]][dimension])
                 for row in valid
             ]
-            true_flags = sum(j and g for j, g in zip(judge_flags, gold_flags))
+            if dimension in FAIL_DIMENSIONS.values():
+                judge_fail_calls = sum(
+                    int(row[dimension]) <= FAIL and gold_flag
+                    for row, gold_flag in zip(valid, gold_flags)
+                )
+                judge_partial_or_fail_calls = sum(
+                    int(row[dimension]) <= PARTIAL and gold_flag
+                    for row, gold_flag in zip(valid, gold_flags)
+                )
+                gold_fail_calls = sum(gold_flags)
+            else:
+                judge_fail_calls = ""
+                judge_partial_or_fail_calls = ""
+                gold_fail_calls = ""
 
             dimension_rows.append(
                 {
                     "judge_model": model,
                     "dimension": dimension,
                     "bias": round(statistics.mean(errors), 3) if errors else "",
-                    "gold_flagged_calls": sum(gold_flags),
-                    "judge_flagged_calls": sum(judge_flags),
-                    "true_flags": true_flags,
-                    "flag_precision": percent(true_flags, sum(judge_flags)),
+                    "judge_fail_calls": judge_fail_calls,
+                    "judge_partial_or_fail_calls": judge_partial_or_fail_calls,
+                    "gold_fail_calls": gold_fail_calls,
                 }
             )
 
@@ -171,25 +169,6 @@ def main():
             gold = gold_verdicts[row["answer_id"]]
             exact_matches += judged == gold
             partial_credit_total += verdict_credit(judged, gold)
-
-        # Count strict and lenient catches for each gold-failed dimension.
-        fail_counts = {}
-        for label, dimension in FAIL_DIMENSIONS.items():
-            answer_ids = gold_fail_ids[label]
-            strict = sum(
-                int(row[dimension]) <= FAIL
-                for row in valid
-                if row["answer_id"] in answer_ids
-            )
-            partial_or_fail = sum(
-                int(row[dimension]) <= PARTIAL
-                for row in valid
-                if row["answer_id"] in answer_ids
-            )
-            gold_fail_calls = sum(
-                row["answer_id"] in answer_ids for row in model_calls
-            )
-            fail_counts[label] = f"{strict}/{partial_or_fail}/{gold_fail_calls}"
 
         # Consistency: spread of the overall score across repeats of each answer.
         repeats_by_answer = defaultdict(list)
@@ -221,7 +200,6 @@ def main():
                 ),
                 "verdict_exact_match": percent(exact_matches, len(valid)),
                 "verdict_partial": percent(partial_credit_total, len(valid)),
-                **fail_counts,
                 "error_rate": (
                     round(
                         100
