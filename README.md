@@ -36,14 +36,15 @@ Gemini 3.8 Flash had the lowest overall MAE against the gold rubric, while Claud
 | `mae_overall` | Mean absolute error between judge and gold scores across all four dimensions. **Headline measure.** |
 | `verdict_exact_match` | Percentage of calls whose PASS / PARTIAL / FAIL verdict matches the gold verdict. |
 | `verdict_partial` | Partial-credit verdict agreement: an exact match earns full credit, a one-level miss earns half credit, and a two-level miss earns none. |
+| `Accuracy`, `Coverage`, `Tone/Clarity` | Counts in the order judge FAIL / judge PARTIAL-or-FAIL / gold FAIL calls. The gold FAIL count is the final denominator and includes all repeats; invalid outputs count only in this final count. |
 | `error_rate` | Percentage of calls without a valid parsed response (`response_status` other than `ok`). |
 | `mean_cost_cents` | Mean cost per call in US cents. |
 | `mean_latency` | Mean seconds per call. |
 | `consistency` | Spread of a judge's overall score across the three repeats of the same answer (mean population standard deviation across answers). Lower is more consistent. |
 
-`outputs/judge_dimension_diagnostics.csv` has one row per judge and dimension: `mae`, `bias` (positive means more lenient than gold), and flag counts with `flag_precision`. A call "flags" a dimension when it scores it as a problem (2 or below); precision is the share of judge flags the gold also flags. Precision is blank when a judge never flagged that dimension.
+`outputs/judge_dimension_diagnostics.csv` has one row per judge and dimension. `bias` is the mean of (judge score − gold score), so positive values mean more lenient scoring. A call "flags" a dimension when it scores it as a problem (2 or below); `flag_precision` is the share of judge flags the gold also flags. `true_flags` is its numerator and `judge_flagged_calls` its denominator; precision is blank when a judge never flagged that dimension. `gold_flagged_calls` gives the number of gold flags among valid calls for context.
 
-Failed calls are excluded from the accuracy-style metrics but counted in `error_rate`.
+Failed calls are excluded from score and verdict agreement and precision calculations. They count in `error_rate` and in the gold-reference total of the three-part fail counts, but not in either judge-count numerator.
 
 ## Reproduce
 

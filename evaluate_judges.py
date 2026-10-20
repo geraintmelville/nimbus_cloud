@@ -1,7 +1,11 @@
 """Evaluate LLM judges against the gold reference.
 
 The summary compares scores, verdicts, operational errors, cost, latency and
-consistency. Dimension diagnostics report score error, bias and flag precision.
+consistency. It also reports how often judges marked gold FAILs as FAIL or
+PARTIAL/FAIL for accuracy, coverage and tone/clarity. Dimension diagnostics
+report bias and flag precision. These three-part counts are
+judge FAIL / judge PARTIAL-or-FAIL / gold FAIL calls; invalid outputs count
+only in the gold-reference total.
 The lowest score for an answer determines its verdict: 2 or below = FAIL,
 exactly 3 = PARTIAL, and 4 or above = PASS.
 
@@ -15,7 +19,7 @@ Writes:
 
 import csv
 import statistics
-from collections import Counter, defaultdict
+from collections import defaultdict
 from pathlib import Path
 
 from run_judges import JUDGE_MODELS, RUBRIC
@@ -29,6 +33,11 @@ DIMENSION_PATH = Path("outputs/judge_dimension_diagnostics.csv")
 FAIL = 2  # a rubric score this low counts as a flagged problem
 PARTIAL = 3  # a lowest score of exactly this gives a PARTIAL verdict
 VERDICT_LEVEL = {"FAIL": 0, "PARTIAL": 1, "PASS": 2}
+FAIL_DIMENSIONS = {
+    "Accuracy": "accuracy",
+    "Coverage": "coverage",
+    "Tone/Clarity": "tone_clarity",
+}
 
 
 def read_csv(path):
@@ -81,6 +90,14 @@ def main():
         for row in reference_rows
     }
     gold_verdicts = {row["answer_id"]: row["verdict"] for row in reference_rows}
+    gold_fail_ids = {
+        label: {
+            answer_id
+            for answer_id, scores in gold_scores.items()
+            if is_flagged(scores[dimension])
+        }
+        for label, dimension in FAIL_DIMENSIONS.items()
+    }
 
     calls = defaultdict(list)
     for row in responses:
@@ -91,6 +108,7 @@ def main():
         "mae_overall",
         "verdict_exact_match",
         "verdict_partial",
+        *FAIL_DIMENSIONS,
         "error_rate",
         "mean_cost_cents",
         "mean_latency",
@@ -99,7 +117,6 @@ def main():
     dimension_fields = [
         "judge_model",
         "dimension",
-        "mae",
         "bias",
         "gold_flagged_calls",
         "judge_flagged_calls",
@@ -118,7 +135,7 @@ def main():
             and row["answer_id"] in gold_scores
         ]
 
-        # Compare scores with gold for each rubric dimension.
+        # Compare scores with gold and calculate per-dimension bias.
         all_errors = []
         for dimension in RUBRIC:
             errors = [
@@ -138,11 +155,6 @@ def main():
                 {
                     "judge_model": model,
                     "dimension": dimension,
-                    "mae": (
-                        round(statistics.mean(abs(e) for e in errors), 3)
-                        if errors
-                        else ""
-                    ),
                     "bias": round(statistics.mean(errors), 3) if errors else "",
                     "gold_flagged_calls": sum(gold_flags),
                     "judge_flagged_calls": sum(judge_flags),
@@ -159,6 +171,25 @@ def main():
             gold = gold_verdicts[row["answer_id"]]
             exact_matches += judged == gold
             partial_credit_total += verdict_credit(judged, gold)
+
+        # Count strict and lenient catches for each gold-failed dimension.
+        fail_counts = {}
+        for label, dimension in FAIL_DIMENSIONS.items():
+            answer_ids = gold_fail_ids[label]
+            strict = sum(
+                int(row[dimension]) <= FAIL
+                for row in valid
+                if row["answer_id"] in answer_ids
+            )
+            partial_or_fail = sum(
+                int(row[dimension]) <= PARTIAL
+                for row in valid
+                if row["answer_id"] in answer_ids
+            )
+            gold_fail_calls = sum(
+                row["answer_id"] in answer_ids for row in model_calls
+            )
+            fail_counts[label] = f"{strict}/{partial_or_fail}/{gold_fail_calls}"
 
         # Consistency: spread of the overall score across repeats of each answer.
         repeats_by_answer = defaultdict(list)
@@ -190,6 +221,7 @@ def main():
                 ),
                 "verdict_exact_match": percent(exact_matches, len(valid)),
                 "verdict_partial": percent(partial_credit_total, len(valid)),
+                **fail_counts,
                 "error_rate": (
                     round(
                         100
@@ -216,17 +248,6 @@ def main():
     write_csv(DIMENSION_PATH, dimension_fields, dimension_rows)
     print(f"Wrote judge evaluation table to {SUMMARY_PATH}")
     print(f"Wrote per-dimension diagnostics to {DIMENSION_PATH}")
-
-    # Baselines: what a judge scores by giving every answer the same verdict.
-    print(f"Gold verdicts: {dict(Counter(gold_verdicts.values()))}")
-    for constant in VERDICT_LEVEL:
-        exact = sum(gold == constant for gold in gold_verdicts.values())
-        credit = sum(verdict_credit(constant, gold) for gold in gold_verdicts.values())
-        print(
-            f"Baseline, always {constant}: exact match "
-            f"{percent(exact, len(gold_verdicts))}%, partial credit "
-            f"{percent(credit, len(gold_verdicts))}%"
-        )
 
 
 if __name__ == "__main__":
