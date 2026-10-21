@@ -5,16 +5,16 @@ Eight models judged 7 customer-support questions for a fictional company, Nimbus
 ## Recommendations
 
 - **High budget** - Claude Sonnet 5.5
-- **Mid budget** - GPT-6.1 Sol or perhaps Gemini 3.8 Flash
+- **Mid budget** - GPT-6.1 Sol
 - **Low budget** - LLama 4 Maverick
 
 ## Summary
 
-- **Claude Sonnet 5.5 was the highest quality judge** with 100% exact verdict match with the gold reference, benefiting from strict scores. It was also the most expensive (0.57¢ per response) of the top performing judges.
-- **Gemini 3.8 Flash and GPT-6.1 Sol were good all-round performers** balancing price (¢0.32 and ¢0.24 respectively) and quality of judgement (88.1% and 85.7% partial match respectively). GPT caught more FAILs (see FAIL detection), so could be considered better in a practical setting, where detecting FAILs is more important than PASSs.
-- **Llama 4 Maverick** could be considered as a budget option (¢0.03 per call), with its raw score agreement ranking 3rd behind Claude and Gemini. It suffered from systemic leniency which affected its verdicts (71.4% partial match and only 42.9% exact match). It was also the fastest (1.9s latency).
+- **Claude Sonnet 5.5 was the highest quality judge** with 100% exact verdict match with the gold reference, benefiting from strict scores. It was also the most expensive (0.57 ¢/call) of the top performing judges.
+- **Gemini 3.8 Flash and GPT-6.1 Sol were good all-round performers** balancing price (0.32 ¢/call and 0.24 ¢/call respectively) and quality of judgement (88.1% and 85.7% partial match respectively). GPT caught more FAILs (see FAIL detection), so could be considered better in a practical setting, where detecting FAILs is more important than PASSs.
+- **Llama 4 Maverick** could be considered as a budget option (0.03 ¢/call), with its raw score agreement ranking 3rd behind Claude and Gemini. It suffered from systemic leniency which affected its verdicts (71.4% partial match and only 42.9% exact match). It was also the fastest (1.9s latency).
 - **Factual accuracy was the easy dimension; style was hard.** Every judge that flagged an accuracy problem was right (100% precision), but almost every judge was too lenient on brevity and tone.
-- **More compute did not buy better judgement.** The slowest and most expensive models (Mistral Large 4 and Qwen3.5 397B) used extended reasoning loops but were no more accurate than much faster models.#
+- **More compute did not buy better judgement.** The slowest and most expensive models (Mistral Large 4 and Qwen3.5 397B) used extended reasoning loops but were no more accurate than much faster models.
 
 ## Method
 
@@ -34,7 +34,7 @@ Eight models judged 7 customer-support questions for a fictional company, Nimbus
 
 ### Overall comparison
 
-| Judge | Verdict partial | Verdict exact | MAE | Error rate | Cost (¢/call) | Latency (s) | Consistency |
+| Judge | Verdict partial | Verdict exact | MAE | Error rate | Cost (¢/call) | Latency (s) | Consistency (mean SD) |
 |---|---|---|---|---|---|---|---|
 | Claude Sonnet 5.5 | **100.00%** | **100.00%** | 0.588 | 4.8% | 0.568 | 3.44 | 0.095 |
 | Gemini 3.8 Flash | 88.1% | 76.2% | **0.560**| 0% | 0.322 | 5.99 | **0.034** |
@@ -53,14 +53,14 @@ Lower is better for MAE, error rate, cost, latency and consistency. Error rate i
 - **Verdict exact** is a brittle metric. A model that judges a FAIL answer as PARTIAL is punished the same as one that judges PASS, this again does not reflect real-world use, where PARTIAL predictions could be sent to a human for review. 
 - **Verdict partial** is chosen as the headline metric to balance the flaws mentioned above. These flaws are depicted best by Llama 4 Maverick. It ranks 3rd in MAE, close to Claude but 8th in exact verdict match, way behind the best performers. Verdict partial is chosen as the most reflective of real-world use.
 - **Best performers** Claude, Gemini and GPT form a clear leading pack, achieving a good balance across accuracy, price and latency, with a roughly equal tradeoff between price and accuracy. All three are viable options depending on preference: Claude offers higher accuracy at higher cost, GPT offers lower accuracy at lower cost, and Gemini balances both.
-**Budget option.** Llama 4 Maverick could be considered as an ultra low budget option. As an open-weight model, it is >20x cheaper than Claude and ranks first in latency. Despite its poor verdicts, prompt engineering might improve its verdicts.
-- **Consistency** does not affect the recommendation. All models had a mean standard deviation below 0.2 across repeats, although small score variation does not necessarily imply stable verdicts near a threshold.
+**Budget option.** Llama 4 Maverick could be considered a low budget option. As an open-weight model, it is >20x cheaper than Claude and ranks 3rd in MAE. Despite its poor verdicts, prompt engineering might improve its performance.
+- **Consistency** does not affect the recommendation. All models had a mean standard deviation <0.2 across repeats, meaning verdict variation is rare.
 - **Error rate** also does not affect the recommendation. Claude had 1/27 invalid responses due to incorrect JSON formatting, which can be prevented by enabling JSON output in the request parameters. Qwen3.5 35B-A3B had 2/27 responses truncated after hitting the 20,000-token limit, which suggests a bigger issue discussed below.
-- **Mistral Large 4 and both Qwen3.5 models** took 49–166 s, with Qwen3.5 397B the most expensive at 1.6¢ per call. This suggests the models entered extended reasoning loops, which did not result in higher quality responses than faster models.
+- **Mistral Large 4 and both Qwen3.5 models** took 49–166 s, with Qwen3.5 397B the most expensive at 1.6¢ per call. These models entered extended reasoning loops, which did not result in higher quality responses than faster models.
 
 ### Per-dimension diagnostics
 
-**FAIL detection** is shown as **judge FAIL / judge PARTIAL-or-FAIL / gold FAIL calls**. For example, `0/3/3` means the judge marked none of the three gold FAIL calls as FAIL or PARTIAL. Invalid outputs are omitted from the table. In the candidate answers, there were three accuracy FAILs (nine calls); coverage and tone/clarity each have one FAIL (three calls).
+**FAIL detection** is shown as **judge FAIL / judge PARTIAL-or-FAIL / gold FAIL calls**. For example, `0/3/3` means the judge marked a gold FAIL as PARTIAL on all 3 repeats. Invalid outputs are omitted from the table. In the candidate answers, there were 3 accuracy FAILs (nine calls); coverage and tone/clarity each have 1 FAIL (three calls).
 
 | Judge | Accuracy | Coverage | Tone/clarity |
 |---|---:|---:|---:|
