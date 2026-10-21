@@ -7,7 +7,7 @@ Each judge scores every answer from 1 to 5 on **accuracy**, **brevity**, **cover
 ## Recommendations
 
 - **High budget** - Claude Sonnet 5.5
-- **Mid budget** - GPT-6.1 Sol or perhaps Gemini 3.8 Flash
+- **Mid budget** - GPT-6.1 Sol
 - **Low budget** - LLama 4 Maverick
 
 **Full results and discussion: [REPORT.md](REPORT.md)**
@@ -28,8 +28,9 @@ Each judge scores every answer from 1 to 5 on **accuracy**, **brevity**, **cover
 - **Claude Sonnet 5.5** was the best quality judge, but was the most expensive out of the best performers (0.57 ¢/call). It had perfect verdict agreement, benefiting from strictness.
 - **GPT-6.1 Sol** was the next best, and was much cheaper than Claude (0.24 ¢/call). It was also strict, meaning despite ranking 4th in MAE, it only failed to catch the coverage FAIL, making it more useful in a practical setting.
 - **Gemini 3.8 Flash** also performed well and was fairly cheap (0.32 ¢/call). While it ranked first in MAE, its leniency meant it did not reliably catch both the coverage and tone/clarity FAILs.
-- **Llama 4 Maverick** could be considered for a low budget option (0.03 ¢/call). Its verdict agreement was poor due to leniency, however it ranked 3rd in MAE.
-- Cheaper models were often fast and consistent but lenient. The slowest, most expensive models, which used extensive reasoning, were not more accurate.
+- - **Mistral Large 4 and both Qwen3.5 models** used extended reasoning, pushing their cost up considerably, but failed to perform as well as the above models.
+- **Llama 4 Maverick** could be considered for a low budget option (0.03 ¢/call). Its verdict agreement was poor due to leniency, missing one of the accuracy FAILs, but it ranked 3rd in MAE.
+- **Cohere Command A** also missed one of the accuracy FAILs, which were caught by almost all models. Its MAE was also comfortably the worst.
 - This is a small case study (7 answers × 3 repeats per model), not a general ranking of models. See [Limitations](REPORT.md#limitations).
 
 ## How the evaluation works
@@ -44,7 +45,7 @@ Each judge scores every answer from 1 to 5 on **accuracy**, **brevity**, **cover
 
 | Column | Meaning |
 |---|---|
-| `verdict_partial` | Partial-credit verdict agreement: an exact match earns full credit, a one-level miss earns half credit, and a two-level miss earns none. **Headline measure.** |
+| `verdict_partial` | Partial-credit verdict agreement with gold reference: an exact match earns full credit, a one-level miss earns half credit, and a two-level miss earns none. **Headline measure.** |
 | `verdict_exact_match` | Percentage of calls whose PASS / PARTIAL / FAIL verdict matches the gold verdict. |
 | `mae_overall` | Mean absolute error between judge and gold scores across all four dimensions. |
 | `error_rate` | Percentage of calls without a valid parsed response (`response_status` other than `ok`). |
